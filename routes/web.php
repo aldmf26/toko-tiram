@@ -1,5 +1,4 @@
 <?php
-
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -29,3 +28,5 @@ Route::group(['middleware' => ['auth:sanctum', 'verified']], function() {
         })->name('accordion');
     });
 });
+
+require __DIR__ . '/aldi.php';

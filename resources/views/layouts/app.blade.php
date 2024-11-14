@@ -5,7 +5,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="csrf-token" content="{{ csrf_token() }}">
 
-        <title>{{ config('app.name', 'Laravel') }}</title>
+        <title>Toko AGA</title>
 
         <!-- Styles -->
         @include('layouts.partials.styles')
@@ -18,7 +18,7 @@
                 @include('layouts.partials.header')
                 <div id="main-content">
 
-                    <div class="page-heading">
+                    <div class="page-heading" style="margin-top: -40px;">
                         <div class="page-title">
                             {{ $header }}
                         </div>

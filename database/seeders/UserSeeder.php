@@ -16,12 +16,22 @@ class UserSeeder extends Seeder
      */
     public function run()
     {
-        User::create([
-            'name' => 'User',
-            'email' => 'user@gmail.com',
-            'email_verified_at' => now(),
-            'password' => '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', // password
-            'remember_token' => Str::random(10),
-        ]);
+        $users = [
+            [
+                'name' => 'Aldi',
+                'email' => 'aldi@gmail.com',
+                'password' => bcrypt('password'),
+            ],
+            [
+                'name' => 'Nanda',
+                'email' => 'nanda@gmail.com',
+                'password' => bcrypt('password'),
+            ],
+        ];
+
+        foreach ($users as $user) {
+            $user = User::create($user);
+            $user->assignRole('presiden');
+        }
     }
 }
