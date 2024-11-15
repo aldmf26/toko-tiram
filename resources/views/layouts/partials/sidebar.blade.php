@@ -3,7 +3,7 @@
     <!-- Add Sidebar Menu Items Here -->
 
     {{-- <x-maz-sidebar-item name="Dashboard" :link="route('dashboard')" icon="bi bi-grid-fill"></x-maz-sidebar-item> --}}
-
+   
     @role('presiden')
     <x-maz-sidebar-item name="Produk" icon="bi bi-shop-window">
         <x-maz-sidebar-sub-item name="Daftar Produk" :link="route('produk.index')"></x-maz-sidebar-sub-item>

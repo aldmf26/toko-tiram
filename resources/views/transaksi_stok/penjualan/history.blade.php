@@ -39,7 +39,7 @@
                         <td>
                             <a href="#" no_invoice="{{ $d->no_invoice }}"
                                 class="btn btn-sm btn-primary detail"><i class="fas fa-eye"></i></a>
-                            <a href="{{route('transaksi.print.penjualan', ['no_invoice' => $d->no_invoice])}}" class="btn btn-sm btn-primary"><i class="fas fa-print"></i></a>
+                            <a target="_blank" href="{{route('transaksi.print.penjualan', ['no_invoice' => $d->no_invoice])}}" class="btn btn-sm btn-primary"><i class="fas fa-print"></i></a>
                         </td>
                     </tr>
                 @empty

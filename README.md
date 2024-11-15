@@ -6,8 +6,8 @@ If you want to check the original template in HTML5 and Bootstrap, [click here](
 ## Installation
 1. Clone this project
     ```bash
-    git clone https://github.com/aldmf26/pos-2024.git
-    cd pos-2024
+    git clone https://github.com/aldmf26/toko-tiram.git
+    cd toko-tiram
     ```
 2. Install dependencies
     ```bash

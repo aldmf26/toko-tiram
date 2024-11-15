@@ -121,9 +121,53 @@ class TransaksiStokController extends Controller
     }
     public function opname()
     {
+        $produk =  Produk::getAllProduk();
+
         $data = [
-            'title' => 'Opname Stok'
+            'title' => 'Opname Stok',
+            'produk' => $produk
         ];
         return view('transaksi_stok.opname.index', $data);
+    }
+
+    public function save_opname(Request $r)
+    {
+        try {
+            DB::beginTransaction();
+            $urutan = 1001 + TransaksiStok::where('jenis_transaksi', 'opname')->count(); // urutan opname otomatis
+            $no_invoice = 'O-' . $urutan;
+            $admin = auth()->user()->name;
+            for ($i = 0; $i < count($r->id_produk); $i++) {
+                $id_produk = $r->id_produk[$i];
+                $produk = Produk::find($id_produk);
+
+                $stok_sistem = $produk->stok;
+                $stok_fisik = $r->stok_fisik[$i];
+                $selisih = $r->selisih[$i];
+                $keterangan = $r->keterangan[$i];
+                
+                if ($selisih != 0) {
+                    TransaksiStok::create([
+                        'produk_id' => $produk->id,
+                        'jenis_transaksi' => 'opname',
+                        'urutan' => $urutan,
+                        'no_invoice' => $no_invoice,
+                        'jumlah' => $stok_fisik, // stok baru hasil opname
+                        'stok_sebelum' => $stok_sistem,
+                        'stok_setelah' => $stok_fisik,
+                        'keterangan' => $keterangan,
+                        'tanggal' => now(),
+                        'admin' => $admin
+                    ]);
+
+                    $produk->update(['stok' => $stok_fisik]);
+                }
+            }
+            DB::commit();
+            return redirect()->route('transaksi.opname')->with('sukses', 'Data Berhasil ditambahkan');
+        } catch (\Exception $e) {
+            DB::rollBack();
+            return redirect()->back()->with('error', $e->getMessage());
+        }
     }
 }

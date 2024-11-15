@@ -10,6 +10,7 @@
                 <button wire:click="$set('selectedTag', 'all')"
                     class="btn {{ is_null($selectedTag) || $selectedTag == 'all' ? 'btn-primary' : 'btn-outline-primary' }} btn-sm"
                     type="button">All</button>
+                    
                 @foreach ($tags as $d)
                     <button wire:click="$set('selectedTag', '{{ $d->nama_tag }}')"
                         class="btn {{ $selectedTag == $d->nama_tag ? 'btn-primary' : 'btn-outline-primary' }} btn-sm"

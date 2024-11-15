@@ -13,6 +13,15 @@
 
 
 <style>
+
+/* Pastikan tidak ada !important yang menghalangi */
+.table,
+.card,
+.navbar {
+  background-color: var(--bs-body-bg);
+  color: var(--bs-body-color);
+}
+
     .pointer {
         cursor: pointer;
     }

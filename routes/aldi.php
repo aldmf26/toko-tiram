@@ -27,6 +27,7 @@ Route::group(['middleware' => ['auth:sanctum', 'verified']], function () {
             Route::get('/history_stok_masuk', 'history_stok_masuk')->name('history.stok_masuk');
 
             Route::get('/opname', 'opname')->name('opname');
+            Route::post('/opname', 'save_opname')->name('save_opname');
             Route::get('/history_opname', 'history_opname')->name('history.opname');
         });
 });
