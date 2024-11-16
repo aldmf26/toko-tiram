@@ -15,9 +15,13 @@
             <div class="mb-3 d-flex justify-content-between">
                 <input id="cari" style="width:30%" type="text" class="form-control" placeholder="cari nama produk"
                     autofocus>
-                @role('presiden')
-                    <button type="submit" class="btn btn-primary">Simpan</button>
-                @endrole
+                    <div>
+
+                        <a href="{{route('transaksi.history.opname')}}" class="btn btn-sm  btn-info">History</a>
+                        @role('presiden')
+                        <button type="submit" class="btn btn-sm btn-primary"><i class="fa fa-save"></i> Simpan</button>
+                        @endrole
+                    </div>
             </div>
         <x-alert pesan="{{ session()->get('error') }}" />
 

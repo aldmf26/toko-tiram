@@ -122,7 +122,7 @@
                     @endforeach
 
                     <input type="hidden" name="totalPrice" value="{{ $totalPrice }}">
-                    <button type="submit" class="mt-3 btn btn-primary btn-block">Pembayaran</button>
+                    <button type="submit" class="mt-3 btn btn-primary btn-block"><i class="fa fa-save"></i> Pembayaran</button>
                 @else
                     <p>No items in cart.</p>
                 @endif
