@@ -10,7 +10,7 @@
                 <button wire:click="$set('selectedTag', 'all')"
                     class="btn {{ is_null($selectedTag) || $selectedTag == 'all' ? 'btn-primary' : 'btn-outline-primary' }} btn-sm"
                     type="button">All</button>
-                    
+
                 @foreach ($tags as $d)
                     <button wire:click="$set('selectedTag', '{{ $d->nama_tag }}')"
                         class="btn {{ $selectedTag == $d->nama_tag ? 'btn-primary' : 'btn-outline-primary' }} btn-sm"
@@ -31,7 +31,7 @@
 
                 @foreach ($produk as $d)
                     <div class="col-lg-4">
-                        <div class="card {{$d->stok == 0 ? 'opacity-50' : ''}}" bis_skin_checked="1">
+                        <div class="card {{ $d->stok == 0 ? 'opacity-50' : '' }}" bis_skin_checked="1">
                             <div class="card-content" bis_skin_checked="1">
                                 <img class="p-1 card-img-top img-fluid "
                                     src="{{ strpos($d->foto, 'http') !== false ? $d->foto : asset('/uploads/' . $d->foto) }}"
@@ -67,7 +67,9 @@
 
         <!-- Order Details -->
         <div class="col-lg-4">
-            <form action="{{ route('transaksi.save_pembayaran') }}" method="post">
+            <form x-data="{
+                isDisabled: false,
+            }" action="{{ route('transaksi.save_pembayaran') }}" method="post">
                 @csrf
                 <h6>Order Details</h6>
 
@@ -104,7 +106,7 @@
                     <div class="mt-2">
                         <span>Dijual Ke</span>
                         <br>
-                        <select required name="dijual_ke"  style="width: 100%" class="form-control-sm">
+                        <select required name="dijual_ke" style="width: 100%" class="form-control-sm">
                             <option value="">Pilih Ke</option>
                             @foreach ($pemilik as $d)
                                 <option value="{{ $d->pemilik }}">{{ $d->pemilik }}</option>
@@ -122,7 +124,13 @@
                     @endforeach
 
                     <input type="hidden" name="totalPrice" value="{{ $totalPrice }}">
-                    <button type="submit" class="mt-3 btn btn-primary btn-block"><i class="fa fa-save"></i> Pembayaran</button>
+                    <button x-show="!isDisabled" @click="isDisabled = true" type="submit"
+                        class="mt-3 btn btn-primary btn-block"><i class="fa fa-save"></i> Pembayaran</button>
+
+                    <button x-show="isDisabled" class="mt-3 btn btn-primary btn-block" type="button" disabled="">
+                        <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                        Loading...
+                    </button>
                 @else
                     <p>No items in cart.</p>
                 @endif

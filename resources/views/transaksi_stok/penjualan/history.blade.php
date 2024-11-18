@@ -14,7 +14,7 @@
         <table class="table table-hover" id="example">
             <thead class="bg-light">
                 <tr>
-                    <th>#</th>
+                    <th class="text-center">#</th>
                     <th>Tanggal</th>
                     <th class="text-start">No Invoice</th>
                     <th class="text-end">Qty</th>
@@ -28,7 +28,7 @@
             <tbody>
                 @forelse ($datas as $d)
                     <tr>
-                        <td>{{ $loop->iteration }}</td>
+                        <td class="text-center">{{ $loop->iteration }}</td>
                         <td>{{ tglFormat($d->tgl) }}</td>
                         <td class="text-start">{{ $d->no_invoice }}</td>
                         <td class="text-end">{{ number_format($d->qty) }}</td>
@@ -37,9 +37,16 @@
                         <td>{{ $d->ket }}</td>
                         <td>{{ $d->admin }}</td>
                         <td>
+                            @role('presiden')
+                                <a onclick="return confirm('Yakin void?')"
+                                    href="{{ route('transaksi.void.penjualan', ['no_invoice' => $d->no_invoice]) }}"
+                                    class="btn btn-sm btn-danger">void</a>
+                            @endrole
                             <a href="#" no_invoice="{{ $d->no_invoice }}"
                                 class="btn btn-sm btn-primary detail"><i class="fas fa-eye"></i></a>
-                            <a target="_blank" href="{{route('transaksi.print.penjualan', ['no_invoice' => $d->no_invoice])}}" class="btn btn-sm btn-primary"><i class="fas fa-print"></i></a>
+                            <a target="_blank"
+                                href="{{ route('transaksi.print.penjualan', ['no_invoice' => $d->no_invoice]) }}"
+                                class="btn btn-sm btn-primary"><i class="fas fa-print"></i></a>
                         </td>
                     </tr>
                 @empty

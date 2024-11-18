@@ -33,7 +33,7 @@
                         <th width="200">Nama </th>
                         <th>Pemilik</th>
                         <th>Rak</th>
-                        <th width="100" class="text-end">Stok Sistem</th>
+                        <th width="100" class="text-end">Stok Program</th>
                         <th width="100" class="text-end">Stok Fisik</th>
                         <th width="100" class="text-end">Selisih</th>
                         <th>Keterangan</th>

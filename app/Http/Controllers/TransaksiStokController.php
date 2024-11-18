@@ -66,7 +66,37 @@ class TransaksiStokController extends Controller
             }
 
             DB::commit();
-            return redirect()->route('transaksi.history', ['no_invoice' => $no_invoice])->with('sukses', 'Data Berhasil ditambahkan');
+            return redirect()->route('transaksi.history.penjualan', ['no_invoice' => $no_invoice])->with('sukses', 'Data Berhasil ditambahkan');
+        } catch (\Exception $e) {
+            DB::rollBack();
+            return redirect()->back()->with('error', $e->getMessage());
+        }
+    }
+
+    public function void(Request $r)
+    {
+        try {
+            DB::beginTransaction();
+
+            $no_invoice = $r->no_invoice;
+
+            // Ambil semua transaksi berdasarkan nomor invoice
+            $transaksi = TransaksiStok::where('no_invoice', $no_invoice)->get();
+
+            foreach ($transaksi as $item) {
+                // Update stok produk
+                $produk = Produk::find($item->produk_id);
+                if ($produk && $item->jenis_transaksi === 'penjualan') {
+                    // Tambahkan jumlah yang dijual kembali ke stok
+                    $produk->update(['stok' => $produk->stok + $item->jumlah]);
+                }
+            }
+
+            // Hapus semua transaksi berdasarkan nomor invoice
+            TransaksiStok::where('no_invoice', $no_invoice)->delete();
+
+            DB::commit();
+            return redirect()->route('transaksi.history.penjualan')->with('sukses', 'Data Berhasil dihapus');
         } catch (\Exception $e) {
             DB::rollBack();
             return redirect()->back()->with('error', $e->getMessage());
@@ -83,7 +113,7 @@ class TransaksiStokController extends Controller
         return view('transaksi_stok.penjualan.history', $data);
     }
 
-    public function dataDetail($no_invoice)
+    public function dataDetail($no_invoice, $title = 'Detail Penjualan')
     {
         $no_invoice = $no_invoice;
         $datas = TransaksiStok::with('produk')->where('no_invoice', $no_invoice)->get();
@@ -91,7 +121,7 @@ class TransaksiStokController extends Controller
         $totalQty = $datas->sum(fn($item) => $item->jumlah);
 
         $data = [
-            'title' => 'Detail Penjualan',
+            'title' => $title,
             'datas' => $datas,
             'no_invoice' => $no_invoice,
             'totalPrice' => $totalPrice,
@@ -145,7 +175,7 @@ class TransaksiStokController extends Controller
                 $stok_fisik = $r->stok_fisik[$i];
                 $selisih = $r->selisih[$i];
                 $keterangan = $r->keterangan[$i];
-                
+
                 if ($selisih != 0) {
                     TransaksiStok::create([
                         'produk_id' => $produk->id,
@@ -165,6 +195,53 @@ class TransaksiStokController extends Controller
             }
             DB::commit();
             return redirect()->route('transaksi.opname')->with('sukses', 'Data Berhasil ditambahkan');
+        } catch (\Exception $e) {
+            DB::rollBack();
+            return redirect()->back()->with('error', $e->getMessage());
+        }
+    }
+
+    public function history_opname(Request $r)
+    {
+        $datas = TransaksiStok::getHistory(null, 'opname');
+        $data = [
+            'title' => 'History Opname',
+            'datas' => $datas
+        ];
+        return view('transaksi_stok.opname.history', $data);
+    }
+
+    public function print_opname(Request $r)
+    {
+        $data = $this->dataDetail($r->no_invoice, 'History Opname');
+
+        return view('transaksi_stok.opname.print', $data);
+    }
+
+    public function void_opname(Request $r)
+    {
+        try {
+            DB::beginTransaction();
+
+            $no_invoice = $r->no_invoice;
+
+            // Ambil semua data transaksi berdasarkan no_invoice
+            $datas = TransaksiStok::where('no_invoice', $no_invoice)->get();
+
+            foreach ($datas as $item) {
+                $produk = Produk::find($item->produk_id);
+
+                if ($produk && $item->jenis_transaksi === 'opname') {
+                    // Kembalikan stok ke kondisi sebelum opname
+                    $produk->update(['stok' => $item->stok_sebelum]);
+                }
+            }
+
+            // Hapus semua transaksi opname terkait no_invoice
+            TransaksiStok::where('no_invoice', $no_invoice)->delete();
+
+            DB::commit();
+            return redirect()->back()->with('sukses', 'Data opname berhasil dihapus.');
         } catch (\Exception $e) {
             DB::rollBack();
             return redirect()->back()->with('error', $e->getMessage());

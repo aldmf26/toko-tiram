@@ -20,6 +20,7 @@ Route::group(['middleware' => ['auth:sanctum', 'verified']], function () {
             Route::get('/', 'index')->name('penjualan');
             Route::post('/', 'save_pembayaran')->name('save_pembayaran');
             Route::get('/history', 'history')->name('history.penjualan');
+            Route::get('/void', 'void')->name('void.penjualan');
             Route::get('/detail', 'detail_penjualan')->name('detail.penjualan');
             Route::get('/print', 'print_penjualan')->name('print.penjualan');
             
@@ -29,5 +30,9 @@ Route::group(['middleware' => ['auth:sanctum', 'verified']], function () {
             Route::get('/opname', 'opname')->name('opname');
             Route::post('/opname', 'save_opname')->name('save_opname');
             Route::get('/history_opname', 'history_opname')->name('history.opname');
+            Route::get('/print_opname', 'print_opname')->name('print.opname');
+            Route::get('/void_opname', 'void_opname')->name('void.opname');
+
+
         });
 });
