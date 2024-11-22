@@ -30,7 +30,7 @@ class Produk extends Model
 
     public static function getAllProduk($search = null, $selectedTag = null)
     {
-        $query = Produk::with(['rak', 'pemilik', 'satuan'])->orderBy('nama_produk', 'ASC');
+        $query = Produk::with(['rak', 'pemilik', 'satuan'])->orderBy('foto', 'ASC');
 
         // Filter berdasarkan pencarian
         if ($search) {
