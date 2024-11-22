@@ -12,13 +12,14 @@
     <div class="section">
         <style>
             .pagination {
-        font-size: 0.875rem; /* Sesuaikan ukuran font */
-    }
+                font-size: 0.875rem;
+                /* Sesuaikan ukuran font */
+            }
         </style>
 
         <x-alert pesan="{{ session()->get('error') }}" />
         @livewire('produk-table')
-        
+
 
         <form action="{{ route('produk.create') }}" method="post" enctype="multipart/form-data">
             @csrf
@@ -137,6 +138,17 @@
                 </div>
             </x-modal>
         </form>
+        <form action="{{ route('produk.create') }}" method="post" enctype="multipart/form-data">
+            @csrf
+            <x-modal idModal="edit" size="modal-lg" title="Edit Produk" btnSave="Y">
+
+                <div id="loadEdit"></div>
+
+            </x-modal>
+        </form>
+
+
+
 
         <form id="tbhSatuanSubmit">
             <x-modal idModal="tbhSatuan" title="Tambah Satuan" btnSave="Y">
@@ -282,6 +294,51 @@
                 loadRoute: "{{ route('produk.pemilik') }}",
                 createRoute: "{{ route('produk.create_pemilik') }}",
                 paramName: 'pemilik'
+            });
+
+            $(document).on('click', '.edit_produk', function() {
+                var id_produk = $(this).attr('id_produk');
+                $.ajax({
+                    type: "get",
+                    url: "{{ route('produk.edit') }}",
+                    data: {
+                        id_produk: id_produk
+                    },
+                    success: function(response) {
+                        $('#loadEdit').html(response);
+                        $('.select2').select2({
+                            dropdownParent: $('#edit .modal-content')
+                        });
+                    }
+                });
+            });
+        </script>
+        <script>
+            $(document).ready(function() {
+                $(document).on('change', '#imageEdit', function() {
+                    const file = this.files[0]; // Ambil file yang dipilih
+                    const reader = new FileReader();
+
+                    if (file && file.type.startsWith('image/')) {
+                        reader.onload = function(e) {
+                            // Update src dan tampilkan elemen pratinjau
+                            $('#imageLoad').attr('src', e.target.result).removeClass('d-none');
+
+
+                            // Sembunyikan gambar default
+                            $('#bookCoverPreviewedit').addClass('d-none');
+                        };
+
+                        reader.readAsDataURL(file); // Baca file sebagai URL data
+                    } else {
+                        alert('File yang dipilih bukan gambar!');
+                    }
+                });
+
+                $('img').on('error', function() {
+                    $(this).attr('src', '/uploads/default.jpg');
+                });
+
             });
         </script>
     @endsection

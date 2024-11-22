@@ -169,7 +169,7 @@ class ProdukController extends Controller
             return redirect()->back()->with('error', $e->getMessage());
         }
     }
-    
+
     public function daftar_rak(Request $r)
     {
         $rak = Rak::all();
@@ -183,5 +183,18 @@ class ProdukController extends Controller
             'pemilik' => $pemilik,
         ];
         return view('produk.daftar_rak', $data);
+    }
+
+    public function edit(Request $r)
+    {
+        $produk = Produk::where('id', $r->id_produk)->first();
+
+        $data = [
+            'produk' => $produk,
+            'satuan' => Satuan::all(),
+            'rak' => Rak::all(),
+            'pemilik' => Pemilik::all(),
+        ];
+        return view('produk.edit', $data);
     }
 }
