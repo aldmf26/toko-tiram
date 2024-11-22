@@ -15,10 +15,11 @@ return new class extends Migration
     {
         Schema::table('produks', function (Blueprint $table) {
             $table->double('hrg_beli');
-            $table->string('tags');
+            $table->string('tags')->nullable();
             $table->integer('satuan_id');
             $table->integer('rak_id');
             $table->integer('pemilik_id');
+            $table->string('kd_produk');
         });
     }
 
