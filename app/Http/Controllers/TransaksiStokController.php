@@ -149,13 +149,16 @@ class TransaksiStokController extends Controller
         ];
         return view('transaksi_stok.stok_masuk.index', $data);
     }
-    public function opname()
+    public function opname(Request $r)
     {
-        $produk =  Produk::getAllProduk();
-
+        $selectedPemilik = $r->pemilik ?? 'linda pribadi';
+        $produk =  Produk::getAllProduk(null, $selectedPemilik);
+        $pemilik = Pemilik::all();
         $data = [
             'title' => 'Opname Stok',
-            'produk' => $produk
+            'selectedPemilik' => $selectedPemilik,
+            'produk' => $produk,
+            'pemilik' => $pemilik
         ];
         return view('transaksi_stok.opname.index', $data);
     }

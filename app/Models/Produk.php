@@ -30,7 +30,9 @@ class Produk extends Model
 
     public static function getAllProduk($search = null, $selectedTag = null, $paginate = 6)
     {
-        $query = Produk::with(['rak', 'pemilik', 'satuan'])->orderBy('id', 'desc');
+        $query = Produk::selectRaw('produks.id,produks.foto, produks.kd_produk, produks.nama_produk, produks.harga, produks.stok, produks.satuan_id, produks.rak_id, produks.pemilik_id')
+            ->with(['rak', 'pemilik', 'satuan'])
+            ->orderBy('id', 'desc');
 
         // Filter berdasarkan pencarian
         if ($search) {
@@ -46,8 +48,8 @@ class Produk extends Model
         // Filter berdasarkan tag yang dipilih
         if ($selectedTag) {
             if ($selectedTag != 'all') {
-                $query->whereHas('tags', function ($q) use ($selectedTag) {
-                    $q->where('nama_tag', $selectedTag);
+                $query->whereHas('pemilik', function ($q) use ($selectedTag) {
+                    $q->where('pemilik', $selectedTag);
                 });
             }
         }
