@@ -49,7 +49,7 @@
                             <td>{{ $i + 1 }}</td>
                             <td>
                                 <div class="d-flex justify-content-center" style="max-width: 100px; height: 70px;">
-                                    <img class="mx-auto mh-100"
+                                    <img style="width: 60px; height: 60px" class="mx-auto mh-100"
                                         src="{{ strpos($d->foto, 'http') !== false ? $d->foto : asset('/uploads/' . $d->foto) }}">
                                 </div>
                             </td>

@@ -79,7 +79,7 @@
                     @foreach ($orderDetails as $order)
                         <div class="row mb-3">
                             <div class="col-lg-4">
-                                <img width="60"
+                                <img style="width: 90px; height: 90px"
                                     src="{{ strpos($order['image'], 'http') !== false ? $order['image'] : asset('/uploads/' . $order['image']) }}"
                                     alt="">
                             </div>
