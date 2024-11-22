@@ -40,7 +40,7 @@
                                 <div class="card-body" bis_skin_checked="1">
                                     <div class="card-text">
                                         <div class="d-flex justify-content-between">
-                                            <h6 class="card-title">({{$d->kd_produk}}) {{ ucwords($d->nama_produk) }}</h6>
+                                            <h6>({{$d->kd_produk}}) {{ ucwords($d->nama_produk) }}</h6>
                                             <span class=""><b>({{ number_format($d->stok, 0) }})</b></span>
                                         </div>
                                         <div class="d-flex justify-content-between">
