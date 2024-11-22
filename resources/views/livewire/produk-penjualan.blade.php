@@ -30,7 +30,7 @@
                     <span>Produk Tidak Ditemukan.</span>
                 @endif
 
-                @foreach ($produk as $d)
+                @foreach ($this->produk as $d)
                     <div class="col-lg-4">
                         <div class="card {{ $d->stok == 0 ? 'opacity-50' : '' }}" bis_skin_checked="1">
                             <div class="card-content" bis_skin_checked="1">

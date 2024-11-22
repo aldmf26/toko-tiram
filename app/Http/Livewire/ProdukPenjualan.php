@@ -19,19 +19,19 @@ class ProdukPenjualan extends Component
     {
         // Ambil tags dan produk awal
         $this->tags = Tag::get();
-        $this->produk = Produk::getAllProduk($this->search, $this->selectedTag, $this->perPage)->items();
+        $this->produk = Produk::getAllProduk($this->search, $this->selectedTag, $this->perPage);
     }
 
     // Update produk saat search diubah
     public function updatedSearch()
     {
-        $this->produk = Produk::getAllProduk($this->search, $this->selectedTag, $this->perPage)->items();
+        $this->produk = Produk::getAllProduk($this->search, $this->selectedTag, $this->perPage);
     }
 
     // Update produk saat tag dipilih
     public function updatedSelectedTag()
     {
-        $this->produk = Produk::getAllProduk($this->search, $this->selectedTag, $this->perPage)->items();
+        $this->produk = Produk::getAllProduk($this->search, $this->selectedTag, $this->perPage);
     }
 
     public function loadMore()

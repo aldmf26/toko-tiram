@@ -52,7 +52,7 @@ class Produk extends Model
             }
         }
 
-        return $query->paginate($paginate);
+        return $query->get();
     }
 
     public static function getProdukByTag($tagName)
