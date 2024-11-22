@@ -13,11 +13,11 @@ return [
     |
     */
 
-    'name' => env('APP_NAME', 'Laravel'),
+    'name' => 'Toko AGA',
 
     /*
     |--------------------------------------------------------------------------
-    | Application Environment
+| Application Environment
     |--------------------------------------------------------------------------
     |
     | This value determines the "environment" your application is currently

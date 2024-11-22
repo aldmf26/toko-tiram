@@ -11,6 +11,16 @@ Route::group(['middleware' => ['auth:sanctum', 'verified']], function () {
         ->group(function () {
             Route::get('/', 'index')->name('index');
             Route::post('/', 'create')->name('create');
+            Route::get('/daftar_rak', 'daftar_rak')->name('daftar_rak');
+
+            Route::get('/satuan', 'satuan')->name('satuan');
+            Route::get('/create_satuan', 'create_satuan')->name('create_satuan');
+
+            Route::get('/rak', 'rak')->name('rak');
+            Route::get('/create_rak', 'create_rak')->name('create_rak');
+
+            Route::get('/pemilik', 'pemilik')->name('pemilik');
+            Route::get('/create_pemilik', 'create_pemilik')->name('create_pemilik');
         });
 
     Route::controller(TransaksiStokController::class)

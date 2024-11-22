@@ -7,6 +7,7 @@
     @role('presiden')
     <x-maz-sidebar-item name="Produk" icon="bi bi-shop-window">
         <x-maz-sidebar-sub-item name="Daftar Produk" :link="route('produk.index')"></x-maz-sidebar-sub-item>
+        {{-- <x-maz-sidebar-sub-item name="Daftar Rak / Satuan / Pemilik" :link="route('produk.daftar_rak')"></x-maz-sidebar-sub-item> --}}
     </x-maz-sidebar-item>
     @endrole
     

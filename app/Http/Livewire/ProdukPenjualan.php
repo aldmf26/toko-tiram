@@ -44,7 +44,7 @@ class ProdukPenjualan extends Component
             if ($this->orderDetails[$produkId]['quantity'] < $produk->stok) {
                 $this->orderDetails[$produkId]['quantity']++; // Tambah jumlah jika ada
             } else {
-                session()->flash('error', 'Jumlah produk melebihi stok.');
+                session()->flash('error', "Produk : $produk->nama_produk melebihi stok.");
                 return;
             }
         } else {

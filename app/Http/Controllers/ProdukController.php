@@ -16,26 +16,87 @@ class ProdukController extends Controller
 
     public function index()
     {
-        $rak = Rak::all();
-        $pemilik = Pemilik::all();
-        $satuan = Satuan::all();
         $produk =  Produk::getAllProduk();
         $data = [
             'title' => 'Daftar Produk',
-            'rak' => $rak,
-            'pemilik' => $pemilik,
-            'satuan' => $satuan,
             'produk' => $produk,
         ];
         return view('produk.index', $data);
     }
 
+    public function satuan()
+    {
+        $satuan = Satuan::all();
+        $data = [
+            'satuan' => $satuan
+        ];
+        return view('produk.satuan', $data);
+    }
+
+    public function create_satuan(Request $r)
+    {
+        $satuan = Satuan::where('satuan', $r->satuan)->first();
+        if (!$satuan) {
+            DB::table('satuans')->insert([
+                'satuan' => $r->satuan
+            ]);
+        }
+    }
+
+    public function rak()
+    {
+        $rak = Rak::all();
+        $data = [
+            'rak' => $rak
+        ];
+        return view('produk.rak', $data);
+    }
+
+    public function create_rak(Request $r)
+    {
+        $rak = Rak::where('rak', $r->rak)->first();
+        if (!$rak) {
+            DB::table('raks')->insert([
+                'rak' => $r->rak
+            ]);
+        }
+    }
+
+    public function pemilik()
+    {
+        $pemilik = Pemilik::all();
+        $data = [
+            'pemilik' => $pemilik
+        ];
+        return view('produk.pemilik', $data);
+    }
+
+
+    public function create_pemilik(Request $r)
+    {
+        $pemilik = Pemilik::where('pemilik', $r->pemilik)->first();
+        if (!$pemilik) {
+            DB::table('pemiliks')->insert([
+                'pemilik' => $r->pemilik
+            ]);
+        }
+    }
 
     public function create(Request $r)
     {
 
         try {
             DB::beginTransaction();
+
+            // Validasi apakah produk sudah ada berdasarkan nama produk dan deskripsi
+            $produkExist = Produk::where('nama_produk', $r->nm_produk)
+                ->where('deskripsi', $r->deskripsi)
+                ->first();
+
+            if ($produkExist) {
+                return redirect()->back()->with('error', 'Produk sudah ada!');
+            }
+
             $urutan = 1001 + TransaksiStok::where('jenis_transaksi', 'stok_masuk')->count();
             $no_invoice = 'M-' . $urutan;
             $admin = auth()->user()->name;
@@ -49,7 +110,7 @@ class ProdukController extends Controller
             $pemilik_id = $r->pemilik;
             $satuan_id = $r->satuan;
 
-            
+
 
             if ($r->hasFile('image')) {
                 $imageName = time() . '.' . $r->image->extension();
@@ -86,7 +147,6 @@ class ProdukController extends Controller
                     'id_produk' => $produk->id,
                     'id_tag' => DB::table('tags')->where('nama_tag', $tag)->first()->id,
                 ]);
-
             }
 
 
@@ -110,5 +170,20 @@ class ProdukController extends Controller
             DB::rollback();
             return redirect()->back()->with('error', $e->getMessage());
         }
+    }
+    
+    public function daftar_rak(Request $r)
+    {
+        $rak = Rak::all();
+        $satuan = Satuan::all();
+        $pemilik = Pemilik::all();
+
+        $data = [
+            'title' => 'Daftar Rak / Satuan / Pemilik',
+            'rak' => $rak,
+            'satuan' => $satuan,
+            'pemilik' => $pemilik,
+        ];
+        return view('produk.daftar_rak', $data);
     }
 }

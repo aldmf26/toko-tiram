@@ -1,4 +1,4 @@
-<x-app-layout>
+<x-app-layout :title="$title">
     <x-slot name="header">
         <div class="d-flex justify-content-between">
             <h3>{{ $title }}</h3>
@@ -37,10 +37,10 @@
                         <td>{{ $d->nama_produk }}</td>
                         <td>{{ $d->deskripsi }}</td>
                         <td class="text-primary">
-                            {{$d->tags}}
+                            {{ $d->tags }}
                         </td>
-                        <td align="right">{{number_format($d->hrg_beli,0)}} / {{ number_format($d->harga,0) }}</td>
-                        <td align="right">{{$d->stok}}</td>
+                        <td align="right">{{ number_format($d->hrg_beli, 0) }} / {{ number_format($d->harga, 0) }}</td>
+                        <td align="right">{{ $d->stok }}</td>
                         <td align="center">
                             <button class="btn btn-sm btn-primary"><i class="fa fa-edit"></i></button>
                             <button class="btn btn-sm btn-danger"><i class="fa fa-trash"></i></button>
@@ -111,9 +111,8 @@
                             </div>
                             <div class="tags-container mt-2">
                                 <template x-for="(tag, index) in tags" :key="index">
-                                    <span class="badge bg-primary text-white d-inline-block m-1 p-2"
-                                        x-text="tag + ' x'" @click="removeTag(index)"
-                                        style="cursor: pointer; display: inline-block;">
+                                    <span class="badge bg-primary text-white d-inline-block m-1 p-2" x-text="tag + ' x'"
+                                        @click="removeTag(index)" style="cursor: pointer; display: inline-block;">
                                         <span class="ms-2">&times;</span>
                                     </span>
                                 </template>
@@ -149,37 +148,41 @@
                     <div class="col-4">
                         <div class="form-group">
                             <label for="">Satuan</label>
-                            <select name="satuan" class="select2" id="">
-                                <option value="">- Pilih Satuan -</option>
-                                @foreach ($satuan as $r)
-                                    <option value="{{ $r->id }}">{{ $r->satuan }}</option>
-                                @endforeach
-                            </select>
+                            <div id="satuan"></div>
                         </div>
                     </div>
                     <div class="col-4">
                         <div class="form-group">
                             <label for="">Rak</label>
-                            <select name="rak" class="select2" id="">
-                                <option value="">- Pilih Rak -</option>
-                                @foreach ($rak as $r)
-                                    <option value="{{ $r->id }}">{{ $r->rak }}</option>
-                                @endforeach
-                            </select>
+                            <div id="rak"></div>
+
                         </div>
                     </div>
                     <div class="col-4">
                         <div class="form-group">
                             <label for="">Pemilik</label>
-                            <select name="pemilik" class="select2" id="">
-                                <option value="">- Pilih Pemilik -</option>
-                                @foreach ($pemilik as $p)
-                                    <option value="{{ $p->id }}">{{ $p->pemilik }}</option>
-                                @endforeach
-                            </select>
+                            <div id="pemilik"></div>
                         </div>
                     </div>
                 </div>
+            </x-modal>
+        </form>
+
+        <form id="tbhSatuanSubmit">
+            <x-modal idModal="tbhSatuan" title="Tambah Satuan" btnSave="Y">
+                <input type="text" id="satuan_val" class="form-control">
+            </x-modal>
+        </form>
+
+        <form id="tbhRakSubmit">
+            <x-modal idModal="tbhRak" title="Tambah Rak" btnSave="Y">
+                <input type="text" id="rak_val" class="form-control">
+            </x-modal>
+        </form>
+
+        <form id="tbhPemilikSubmit">
+            <x-modal idModal="tbhPemilik" title="Tambah Pemilik" btnSave="Y">
+                <input type="text" id="pemilik_val" class="form-control">
             </x-modal>
         </form>
     </div>
@@ -200,8 +203,7 @@
                     }
                 }
             }
-        </script>
-        <script>
+
             function previewImage() {
                 const fileInput = document.querySelector('#image');
                 const imagePreview = document.querySelector('#bookCoverPreview');
@@ -213,6 +215,104 @@
                     imagePreview.src = e.target.result;
                 };
             }
+        </script>
+
+        <script>
+            // Fungsi generik untuk load select dan tambah item baru
+            function setupDynamicSelect(options) {
+                const {
+                    selectId,
+                    modalId,
+                    submitFormId,
+                    inputId,
+                    loadRoute,
+                    createRoute,
+                    loadCallback
+                } = options;
+
+                // Load select
+                function loadSelect() {
+                    $.ajax({
+                        type: "GET",
+                        url: loadRoute,
+                        beforeSend: function() {
+                            $(`#${options.containerId}`).html('loading...');
+                        },
+                        success: function(r) {
+                            $(`#${options.containerId}`).html(r);
+                            $('.select2').select2({
+                                dropdownParent: $('#tambah .modal-content')
+                            });
+
+                            if (loadCallback) loadCallback(r);
+                        }
+                    });
+                }
+
+                // Panggil load select saat inisialisasi
+                loadSelect();
+
+                // Event handler untuk select
+                $(document).on('change', `#${selectId}`, function() {
+                    const getVal = $(this).val();
+                    if (getVal === 'tambah') {
+                        $(`#${modalId}`).modal('show');
+
+                        $(`#${submitFormId}`).off('submit').on('submit', function(e) {
+                            e.preventDefault();
+                            const inputVal = $(`#${inputId}`).val();
+
+                            $.ajax({
+                                type: "GET",
+                                url: createRoute,
+                                data: {
+                                    [options.paramName]: inputVal
+                                },
+                                success: function(r) {
+                                    $(`#${modalId}`).modal('hide');
+                                    loadSelect();
+                                }
+                            });
+                        });
+                    }
+                });
+            }
+
+            // Inisialisasi untuk Satuan
+            setupDynamicSelect({
+                selectId: 'selectSatuan',
+                modalId: 'tbhSatuan',
+                submitFormId: 'tbhSatuanSubmit',
+                inputId: 'satuan_val',
+                containerId: 'satuan',
+                loadRoute: "{{ route('produk.satuan') }}",
+                createRoute: "{{ route('produk.create_satuan') }}",
+                paramName: 'satuan'
+            });
+
+            // Inisialisasi untuk Rak
+            setupDynamicSelect({
+                selectId: 'selectRak',
+                modalId: 'tbhRak',
+                submitFormId: 'tbhRakSubmit',
+                inputId: 'rak_val',
+                containerId: 'rak',
+                loadRoute: "{{ route('produk.rak') }}",
+                createRoute: "{{ route('produk.create_rak') }}",
+                paramName: 'rak'
+            });
+
+            // Inisialisasi untuk Pemilik
+            setupDynamicSelect({
+                selectId: 'selectPemilik',
+                modalId: 'tbhPemilik',
+                submitFormId: 'tbhPemilikSubmit',
+                inputId: 'pemilik_val',
+                containerId: 'pemilik',
+                loadRoute: "{{ route('produk.pemilik') }}",
+                createRoute: "{{ route('produk.create_pemilik') }}",
+                paramName: 'pemilik'
+            });
         </script>
     @endsection
 </x-app-layout>

@@ -1,4 +1,5 @@
 <div>
+    <x-alert pesan="{{ session()->get('error') }}" />
     <div class="row mt-4">
         <div class="col-lg-8">
             <input wire:model.debounce.500ms="search" type="text" class="form-control" placeholder="cari nama produk"

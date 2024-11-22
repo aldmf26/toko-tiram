@@ -1,3 +1,6 @@
+@props([
+    'title' => 'Dashboard',
+])
 <!DOCTYPE html data-bs-theme="dark">
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
 
@@ -6,8 +9,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <meta name="color-scheme" content="light">
+    <link rel="shortcut icon" href="{{globalVar('appUrl')}}" type="image/x-icon">
 
-    <title>Toko AGA</title>
+    <title>{{$title}} - {{ config('app.name') }}</title>
 
     <!-- Styles -->
     @include('layouts.partials.styles')

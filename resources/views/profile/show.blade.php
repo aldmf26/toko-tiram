@@ -1,4 +1,4 @@
-<x-app-layout>
+<x-app-layout title="show">
     <x-slot name="header">
         <div class="row">
             <div class="col-12 col-md-6 order-md-1 order-last">
