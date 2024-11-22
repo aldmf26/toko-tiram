@@ -36,7 +36,6 @@ class RakPemilikSeeder extends Seeder
             'M',
             'N',
             'O',
-            'O',
             'P',
             'Q',
             'R',
