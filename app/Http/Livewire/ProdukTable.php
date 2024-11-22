@@ -30,12 +30,13 @@ class ProdukTable extends Component
         // Query data produk berdasarkan pencarian
         $products = Produk::query()
             ->where('nama_produk', 'like', '%' . $this->search . '%')
-            ->orderBy('id', 'desc')
+            ->orderBy('nama_produk', 'ASC')
             ->paginate($this->perPage);
         $data = [
             'produk' => $products
         ];
 
-        return view('livewire.produk-table', $data);
+        return view('livewire.produk-table', $data) // Sesuaikan layout
+        ->with('pagination', 'vendor.livewire.simple-bootstrap');;
     }
 }

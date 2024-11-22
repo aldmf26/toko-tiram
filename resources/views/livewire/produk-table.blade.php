@@ -1,6 +1,6 @@
 <div>
-    <div class="mb-4">
-        <input type="text" class="form-control" placeholder="Cari Produk..." wire:model.debounce.300ms="search">
+    <div class="mb-4 mt-3">
+        <input autofocus type="text" class="form-control" placeholder="Cari Produk..." wire:model.debounce.300ms="search">
     </div>
     <table class="table table-hover">
         <thead class="bg-light">
@@ -40,7 +40,7 @@
             @endforeach
         </tbody>
     </table>
-    <div class="mt-3 d-flex">
+    <div class="mt-3 d-flex justify-content-between">
         <div>
             <select class="form-select" wire:model="perPage">
                 <option value="5">5</option>
@@ -49,7 +49,7 @@
             </select>
         </div>
         <div>
-            {{ $produk->links() }} <!-- Paginasi -->
+            {{ $produk->links('vendor.livewire.simple-bootstrap') }} <!-- Paginasi -->
         </div>
     </div>
 </div>
