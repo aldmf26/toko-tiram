@@ -12,18 +12,27 @@
         @csrf
         <div class="section">
             @include('transaksi_stok.nav')
+            <div class="mt-3 mb-2 d-flex flex-wrap gap-2">
+
+                @foreach ($pemilik as $d)
+                    <a href="{{route('transaksi.opname', ['pemilik' => $d->pemilik])}}"
+                        class="btn {{ $d->pemilik == $selectedPemilik ? 'btn-primary' : 'btn-outline-primary' }} btn-sm"
+                        type="button">{{ ucwords($d->pemilik) }}</a>
+                @endforeach
+            </div>
             <div class="mb-3 d-flex justify-content-between">
                 <input id="cari" style="width:30%" type="text" class="form-control" placeholder="cari nama produk"
                     autofocus>
-                    <div>
+                <div>
 
-                        <a href="{{route('transaksi.history.opname')}}" class="btn btn-sm  btn-info">History</a>
-                        @role('presiden')
+                    <a href="{{ route('transaksi.history.opname') }}" class="btn btn-sm  btn-info">History</a>
+                    @role('presiden')
                         <button type="submit" class="btn btn-sm btn-primary"><i class="fa fa-save"></i> Simpan</button>
-                        @endrole
-                    </div>
+                    @endrole
+                </div>
             </div>
-        <x-alert pesan="{{ session()->get('error') }}" />
+            
+            <x-alert pesan="{{ session()->get('error') }}" />
 
             <table id="tbl" class="table table-striped table-bordered">
                 <thead class="bg-info text-white">
@@ -59,15 +68,14 @@
                             <td class="text-end {{ $d->stok < 1 ? 'text-danger' : '' }}">{{ $d->stok }}</td>
                             <td>
                                 <input required type="text" value="{{ $d->stok }}"
-                                    class="form-control text-end" name="stok_fisik[]"
-                                    x-model="stok_fisik" @keyup="selisih = stok_sistem - stok_fisik"
-                                    onclick="this.select()">
+                                    class="form-control text-end" name="stok_fisik[]" x-model="stok_fisik"
+                                    @keyup="selisih = stok_sistem - stok_fisik" onclick="this.select()">
                             </td>
                             <td>
-                                <input readonly type="text" class="form-control text-end"
-                                    name="selisih[]" :value="selisih">
-                                <input type="hidden" class="form-control text-end"
-                                    name="id_produk[]" value="{{$d->id}}">
+                                <input readonly type="text" class="form-control text-end" name="selisih[]"
+                                    :value="selisih">
+                                <input type="hidden" class="form-control text-end" name="id_produk[]"
+                                    value="{{ $d->id }}">
                             </td>
                             <td>
                                 <input placeholder="keterangan selisih" type="text" class="form-control"

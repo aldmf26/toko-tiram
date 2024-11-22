@@ -6,21 +6,20 @@
                 autofocus>
 
             {{-- kategori tags --}}
-            <div class="mt-3 d-flex flex-wrap gap-2 d-none">
-                {{-- <div class="" style="overflow-x: auto; white-space: nowrap; scroll-behavior: smooth;"> --}}
+            <div class="mt-3 d-flex flex-wrap gap-2">
                 <button wire:click="$set('selectedTag', 'all')"
                     class="btn {{ is_null($selectedTag) || $selectedTag == 'all' ? 'btn-primary' : 'btn-outline-primary' }} btn-sm"
                     type="button">All</button>
 
                 @foreach ($tags as $d)
-                    <button wire:click="$set('selectedTag', '{{ $d->nama_tag }}')"
-                        class="btn {{ $selectedTag == $d->nama_tag ? 'btn-primary' : 'btn-outline-primary' }} btn-sm"
-                        type="button">{{ ucwords($d->nama_tag) }}</button>
+                    <button wire:click="$set('selectedTag', '{{ $d->pemilik }}')"
+                        class="btn {{ $selectedTag == $d->pemilik ? 'btn-primary' : 'btn-outline-primary' }} btn-sm"
+                        type="button">{{ ucwords($d->pemilik) }}</button>
                 @endforeach
             </div>
 
             {{-- produk view --}}
-            <div wire:loading wire:target="search">
+            <div wire:loading wire:target="search,selectedTag">
                 <div class="spinner-border text-primary" role="status">
                     <span class="visually-hidden">Loading...</span>
                 </div>
@@ -34,9 +33,9 @@
                     <div class="col-lg-4">
                         <div class="card {{ $d->stok == 0 ? 'opacity-50' : '' }}" bis_skin_checked="1">
                             <div class="card-content" bis_skin_checked="1">
-                                {{-- <img class="p-1 card-img-top img-fluid "
+                                <img class="p-1 card-img-top img-fluid "
                                     src="{{ strpos($d->foto, 'http') !== false ? $d->foto : asset('/uploads/' . $d->foto) }}"
-                                    alt="Card image cap" style="height: 10rem"> --}}
+                                    alt="Card image cap" style="height: 10rem">
                                 <div class="card-body" bis_skin_checked="1">
                                     <div class="card-text">
                                         <div class="d-flex justify-content-between">

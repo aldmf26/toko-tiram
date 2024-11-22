@@ -48,8 +48,8 @@ class Produk extends Model
         // Filter berdasarkan tag yang dipilih
         if ($selectedTag) {
             if ($selectedTag != 'all') {
-                $query->whereHas('tags', function ($q) use ($selectedTag) {
-                    $q->where('nama_tag', $selectedTag);
+                $query->whereHas('pemilik', function ($q) use ($selectedTag) {
+                    $q->where('pemilik', $selectedTag);
                 });
             }
         }

@@ -13,19 +13,19 @@ class ProdukPenjualan extends Component
     public $search = '';
     public $produk;
     public $perPage = 6;
-    public $selectedTag = null;
+    public $selectedTag = 'linda pribadi';
     public $orderDetails = [];
     public function mount()
     {
         // Ambil tags dan produk awal
-        $this->tags = Tag::get();
-        $this->produk = [];
+        $this->tags = Pemilik::get();
+        $this->produk = Produk::getAllProduk($this->search, $this->selectedTag, $this->perPage);
     }
 
     // Update produk saat search diubah
     public function updatedSearch()
     {
-        $this->produk = $this->search ? Produk::getAllProduk($this->search, $this->selectedTag, $this->perPage) : [];
+        $this->produk = Produk::getAllProduk($this->search, $this->selectedTag, $this->perPage);
     }
 
     // Update produk saat tag dipilih
