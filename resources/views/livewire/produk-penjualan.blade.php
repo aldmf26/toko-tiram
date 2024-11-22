@@ -34,9 +34,9 @@
                     <div class="col-lg-4">
                         <div class="card {{ $d->stok == 0 ? 'opacity-50' : '' }}" bis_skin_checked="1">
                             <div class="card-content" bis_skin_checked="1">
-                                <img class="p-1 card-img-top img-fluid "
+                                {{-- <img class="p-1 card-img-top img-fluid "
                                     src="{{ strpos($d->foto, 'http') !== false ? $d->foto : asset('/uploads/' . $d->foto) }}"
-                                    alt="Card image cap" style="height: 10rem">
+                                    alt="Card image cap" style="height: 10rem"> --}}
                                 <div class="card-body" bis_skin_checked="1">
                                     <div class="card-text">
                                         <div class="d-flex justify-content-between">
@@ -63,25 +63,7 @@
                     </div>
                 @endforeach
 
-                {{-- <div x-data="{
-                    observe() {
-                        const observer = new IntersectionObserver((produk) => {
-                            produk.forEach(d => {
-                                if (d.isIntersecting) {
-                                    @this.loadMore()
-                                }
-                            })
-                        })
-                        observer.observe(this.$el)
-                    }
-                }" x-init="observe">
-                    <div wire:loading wire:target="loadMore" class="p-1">
-                        <button class="btn btn-primary" type="button" disabled="">
-                            <span class="spinner-grow spinner-grow-sm" role="status" aria-hidden="true"></span>
-                            Processing...
-                        </button>
-                    </div>
-                </div> --}}
+              
             </div>
         </div>
 
