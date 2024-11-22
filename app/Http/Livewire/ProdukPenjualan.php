@@ -12,25 +12,31 @@ class ProdukPenjualan extends Component
     public $tags;
     public $search = '';
     public $produk;
+    public $perPage = 6;
     public $selectedTag = null;
     public $orderDetails = [];
     public function mount()
     {
         // Ambil tags dan produk awal
         $this->tags = Tag::get();
-        $this->produk = Produk::getAllProduk($this->search, $this->selectedTag);
+        $this->produk = Produk::getAllProduk($this->search, $this->selectedTag, $this->perPage)->items();
     }
 
     // Update produk saat search diubah
     public function updatedSearch()
     {
-        $this->produk = Produk::getAllProduk($this->search, $this->selectedTag);
+        $this->produk = Produk::getAllProduk($this->search, $this->selectedTag, $this->perPage)->items();
     }
 
     // Update produk saat tag dipilih
     public function updatedSelectedTag()
     {
-        $this->produk = Produk::getAllProduk($this->search, $this->selectedTag);
+        $this->produk = Produk::getAllProduk($this->search, $this->selectedTag, $this->perPage)->items();
+    }
+
+    public function loadMore()
+    {
+        $this->perPage += 10;
     }
 
     public function addToOrder($produkId)

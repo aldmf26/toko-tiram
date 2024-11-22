@@ -26,7 +26,7 @@
                 </div>
             </div>
             <div class="row mt-4">
-                @if ($produk->count() == 0)
+                @if (empty($produk))
                     <span>Produk Tidak Ditemukan.</span>
                 @endif
 
@@ -40,7 +40,7 @@
                                 <div class="card-body" bis_skin_checked="1">
                                     <div class="card-text">
                                         <div class="d-flex justify-content-between">
-                                            <h6>({{$d->kd_produk}}) {{ ucwords($d->nama_produk) }}</h6>
+                                            <h6>({{ $d->kd_produk }}) {{ ucwords($d->nama_produk) }}</h6>
                                             <span class=""><b>({{ number_format($d->stok, 0) }})</b></span>
                                         </div>
                                         <div class="d-flex justify-content-between">
@@ -63,6 +63,25 @@
                     </div>
                 @endforeach
 
+                {{-- <div x-data="{
+                    observe() {
+                        const observer = new IntersectionObserver((produk) => {
+                            produk.forEach(d => {
+                                if (d.isIntersecting) {
+                                    @this.loadMore()
+                                }
+                            })
+                        })
+                        observer.observe(this.$el)
+                    }
+                }" x-init="observe">
+                    <div wire:loading wire:target="loadMore" class="p-1">
+                        <button class="btn btn-primary" type="button" disabled="">
+                            <span class="spinner-grow spinner-grow-sm" role="status" aria-hidden="true"></span>
+                            Processing...
+                        </button>
+                    </div>
+                </div> --}}
             </div>
         </div>
 

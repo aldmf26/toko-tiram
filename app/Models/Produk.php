@@ -28,7 +28,7 @@ class Produk extends Model
         return $this->belongsToMany(Tag::class, 'produk_tags', 'id_produk', 'id_tag');
     }
 
-    public static function getAllProduk($search = null, $selectedTag = null)
+    public static function getAllProduk($search = null, $selectedTag = null, $paginate = 6)
     {
         $query = Produk::with(['rak', 'pemilik', 'satuan'])->orderBy('id', 'desc');
 
@@ -52,7 +52,7 @@ class Produk extends Model
             }
         }
 
-        return $query->get();
+        return $query->paginate($paginate);
     }
 
     public static function getProdukByTag($tagName)
