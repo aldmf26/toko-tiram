@@ -32,29 +32,30 @@
                 @foreach ($this->produk as $d)
                     <div class="col-lg-4">
                         <div class="card {{ $d->stok == 0 ? 'opacity-50' : '' }}" bis_skin_checked="1">
-                            <div class="card-content" bis_skin_checked="1">
+                            <div x-data="{ produkId: null, stokCukup: true }" class="card-content" bis_skin_checked="1">
                                 {{-- <img class="p-1 card-img-top img-fluid "
                                     src="{{ strpos($d->foto, 'http') !== false ? $d->foto : asset('/uploads/' . $d->foto) }}"
                                     alt="Card image cap" style="height: 10rem"> --}}
-                                <div class="card-body" bis_skin_checked="1">
+                                    <div class="p-2 pointer hovercard"
+                                    @click="$wire.call('addToCart', {{$d->id}})">
                                     <div class="card-text">
                                         <div class="d-flex justify-content-between">
-                                            <h6>({{ $d->kd_produk }}) {{ ucwords($d->nama_produk) }}</h6>
+                                            <h6 class="pointer">({{ $d->kd_produk }}) {{ ucwords($d->nama_produk) }}
+                                            </h6>
                                             <span class=""><b>({{ number_format($d->stok, 0) }})</b></span>
                                         </div>
                                         <div class="d-flex justify-content-between">
                                             <span>{{ number_format($d->harga, 0) }}</span>
                                             <div>
                                                 @if ($d->stok != 0)
-                                                    <span wire:click="addToOrder({{ $d->id }})"
-                                                        class="badge bg-primary pointer"><i
+                                                    <span class="badge bg-primary pointer"><i
                                                             class="fas fa-plus"></i></span>
                                                 @else
                                                     <span class="badge bg-danger">Habis</span>
                                                 @endif
                                             </div>
                                         </div>
-                                        <p class="mt-2 text-primary text-sm">{{ '#' . $d->tags }}</p>
+                                            <p class="mt-2 text-primary text-sm">{{ '#' . $d->tags }}</p>
                                     </div>
                                 </div>
                             </div>
@@ -62,7 +63,7 @@
                     </div>
                 @endforeach
 
-              
+
             </div>
         </div>
 

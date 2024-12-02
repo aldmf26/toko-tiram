@@ -10,6 +10,8 @@
 
     <div class="section">
         @include('transaksi_stok.nav_history')
+        <x-pemilik_nav route="transaksi.history.penjualan" />
+
         <x-alert pesan="{{ session()->get('error') }}" />
         <table class="table table-hover" id="example">
             <thead class="bg-light">

@@ -35,7 +35,10 @@ Route::group(['middleware' => ['auth:sanctum', 'verified']], function () {
             Route::get('/print', 'print_penjualan')->name('print.penjualan');
             
             Route::get('/stok_masuk', 'stok_masuk')->name('stok_masuk');
+            Route::post('/stok_masuk', 'save_stok_masuk')->name('save_stok_masuk');
             Route::get('/history_stok_masuk', 'history_stok_masuk')->name('history.stok_masuk');
+            Route::get('/print_stok_masuk', 'print_stok_masuk')->name('print.stok_masuk');
+            Route::get('/void_stok_masuk', 'void_stok_masuk')->name('void.stok_masuk');
 
             Route::get('/opname', 'opname')->name('opname');
             Route::post('/opname', 'save_opname')->name('save_opname');

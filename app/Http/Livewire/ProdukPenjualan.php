@@ -39,11 +39,14 @@ class ProdukPenjualan extends Component
         $this->perPage += 10;
     }
 
-    public function addToOrder($produkId)
+    public function addToCart($produkId)
     {
         // Cari produk berdasarkan ID
         $produk = Produk::find($produkId);
-
+        if ($produk->stok == 0) {
+            session()->flash('error', "Produk : $produk->nama_produk stok habis.");
+            return;
+        };
         // Cek apakah produk sudah ada dalam keranjang
         if (isset($this->orderDetails[$produkId])) {
             // Jika sudah ada, periksa apakah jumlahnya masih dalam batas stok
@@ -65,7 +68,7 @@ class ProdukPenjualan extends Component
             ];
         }
     }
-    
+
     public function removeFromOrder($produkId)
     {
         unset($this->orderDetails[$produkId]);

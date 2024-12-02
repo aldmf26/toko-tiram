@@ -12,14 +12,8 @@
         @csrf
         <div class="section">
             @include('transaksi_stok.nav')
-            <div class="mt-3 mb-2 d-flex flex-wrap gap-2">
+            <x-pemilik_nav route="transaksi.opname" />
 
-                @foreach ($pemilik as $d)
-                    <a href="{{route('transaksi.opname', ['pemilik' => $d->pemilik])}}"
-                        class="btn {{ $d->pemilik == $selectedPemilik ? 'btn-primary' : 'btn-outline-primary' }} btn-sm"
-                        type="button">{{ ucwords($d->pemilik) }}</a>
-                @endforeach
-            </div>
             <div class="mb-3 d-flex justify-content-between">
                 <input id="cari" style="width:30%" type="text" class="form-control" placeholder="cari nama produk"
                     autofocus>

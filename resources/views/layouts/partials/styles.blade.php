@@ -13,18 +13,22 @@
 
 
 <style>
-
-/* Pastikan tidak ada !important yang menghalangi */
-.table,
-.card,
-.navbar {
-  background-color: var(--bs-body-bg);
-  color: var(--bs-body-color);
-}
+    /* Pastikan tidak ada !important yang menghalangi */
+    .table,
+    .card,
+    .navbar {
+        background-color: var(--bs-body-bg);
+        color: var(--bs-body-color);
+    }
 
     .pointer {
         cursor: pointer;
     }
+
+    .hovercard:hover {
+        border: 0.75px solid #0d6efd;
+    }
+
     .select2 {
         width: 100% !important;
 

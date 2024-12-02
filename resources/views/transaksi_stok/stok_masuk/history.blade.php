@@ -6,11 +6,9 @@
         </div>
 
     </x-slot>
-
-
     <div class="section">
         @include('transaksi_stok.nav_history')
-        <x-pemilik_nav route="transaksi.history.opname" />
+        <x-pemilik_nav route="transaksi.history.stok_masuk" />
         <x-alert pesan="{{ session()->get('error') }}" />
         <table class="table table-hover" id="example">
             <thead class="bg-light">
@@ -32,12 +30,12 @@
                         <td align="center">
                             @role('presiden')
                                 <a onclick="return confirm('Yakin void?')"
-                                    href="{{ route('transaksi.void.opname', ['no_invoice' => $d->no_invoice]) }}"
+                                    href="{{ route('transaksi.void.stok_masuk', ['no_invoice' => $d->no_invoice]) }}"
                                     class="btn btn-sm btn-danger">void</a>
                             @endrole 
 
                             <a target="_blank"
-                                href="{{ route('transaksi.print.opname', ['no_invoice' => $d->no_invoice]) }}"
+                                href="{{ route('transaksi.print.stok_masuk', ['no_invoice' => $d->no_invoice]) }}"
                                 class="btn btn-sm btn-primary"><i class="fas fa-print"></i></a>
                         </td>
                     </tr>

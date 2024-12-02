@@ -35,8 +35,8 @@ class TransaksiStokController extends Controller
             $dijual_ke = $r->dijual_ke;
 
             $admin = auth()->user()->name;
-            $urutan = 1001 + TransaksiStok::where('jenis_transaksi', 'penjualan')->count();
-            $no_invoice = 'K-' . $urutan;
+            $urutan = 1001 + TransaksiStok::where([['jenis_transaksi', 'penjualan'], ['dijual_ke', $dijual_ke]])->count();
+            $no_invoice = $dijual_ke . '-' . $urutan;
 
             for ($i = 0; $i < count($r->id_produk); $i++) {
                 $id_produk = $r->id_produk[$i];
@@ -66,7 +66,7 @@ class TransaksiStokController extends Controller
             }
 
             DB::commit();
-            return redirect()->route('transaksi.history.penjualan', ['no_invoice' => $no_invoice])->with('sukses', 'Data Berhasil ditambahkan');
+            return redirect()->route('transaksi.history.penjualan', ['pemilik' => $dijual_ke])->with('sukses', 'Data Berhasil ditambahkan');
         } catch (\Exception $e) {
             DB::rollBack();
             return redirect()->back()->with('error', $e->getMessage());
@@ -105,10 +105,12 @@ class TransaksiStokController extends Controller
 
     public function history(Request $r)
     {
-        $datas = TransaksiStok::getHistory();
+        $selectedPemilik = $r->pemilik ?? 'linda pribadi';
+        $datas = TransaksiStok::getHistory(null, 'penjualan', $selectedPemilik);
+
         $data = [
             'title' => 'History Penjualan',
-            'datas' => $datas
+            'datas' => $datas,
         ];
         return view('transaksi_stok.penjualan.history', $data);
     }
@@ -142,23 +144,122 @@ class TransaksiStokController extends Controller
         return view('transaksi_stok.penjualan.print', $data);
     }
 
-    public function stok_masuk()
+    public function stok_masuk(Request $r)
     {
+        $admin = auth()->user()->name;
+        $urutan = 1001 + TransaksiStok::where('jenis_transaksi', 'stok_masuk')->count();
+        $no_invoice = "M" . '-' . $urutan;
+
+        $pemilik = $r->pemilik ?? 'linda pribadi';
+        $produk =  Produk::getAllProduk(null, $pemilik);
+
         $data = [
-            'title' => 'Stok Masuk'
+            'title' => 'Stok Masuk',
+            'no_invoice' => $no_invoice,
+            'admin' => $admin,
+            'produk' => $produk,
+            'pemilik' => $pemilik,
         ];
         return view('transaksi_stok.stok_masuk.index', $data);
     }
+
+    public function save_stok_masuk(Request $r)
+    {
+        $tgl = $r->tgl;
+        $no_invoice = $r->no_invoice;
+        $pemilik = $r->pemilik;
+
+        try {
+            DB::beginTransaction();
+            $urutan = 1001 + TransaksiStok::where('jenis_transaksi', 'stok_masuk')->count();
+            $no_invoice = 'M-' . $urutan;
+            $admin = auth()->user()->name;
+            for ($i = 0; $i < count($r->id_produk); $i++) {
+                $id_produk = $r->id_produk[$i];
+                $produk = Produk::find($id_produk);
+
+                $qty = $r->qty[$i];
+
+                TransaksiStok::create([
+                    'produk_id' => $produk->id,
+                    'jenis_transaksi' => 'stok_masuk',
+                    'urutan' => $urutan,
+                    'dijual_ke' => $pemilik,
+                    'no_invoice' => $no_invoice,
+                    'jumlah' => $qty,
+                    'stok_sebelum' => $produk->stok,
+                    'stok_setelah' => $produk->stok + $qty,
+                    'keterangan' => null,
+                    'tanggal' => $tgl,
+                    'admin' => $admin
+                ]);
+
+                $produk->update(['stok' => $produk->stok + $qty]);
+            }
+
+            DB::commit();
+            return redirect()->route('transaksi.history.stok_masuk')->with('sukses', 'Stok masuk berhasil disimpan.');
+        } catch (\Exception $e) {
+            DB::rollBack();
+            return redirect()->back()->with('error', $e->getMessage());
+        }
+    }
+    public function history_stok_masuk(Request $r)
+    {
+        $selectedPemilik = $r->pemilik ?? 'linda pribadi';
+        $datas = TransaksiStok::getHistory(null, 'stok_masuk', $selectedPemilik);
+        $data = [
+            'title' => 'History Stok_masuk',
+            'datas' => $datas
+        ];
+        return view('transaksi_stok.stok_masuk.history', $data);
+    }
+
+    public function print_stok_masuk(Request $r)
+    {
+        $data = $this->dataDetail($r->no_invoice, 'History Stok Masuk');
+
+        return view('transaksi_stok.stok_masuk.print', $data);
+    }
+
+    public function void_stok_masuk(Request $r)
+    {
+        try {
+            DB::beginTransaction();
+
+            $no_invoice = $r->no_invoice;
+
+            // Ambil semua data transaksi berdasarkan no_invoice
+            $datas = TransaksiStok::where('no_invoice', $no_invoice)->get();
+
+            foreach ($datas as $item) {
+                $produk = Produk::find($item->produk_id);
+
+                if ($produk && $item->jenis_transaksi === 'opname') {
+                    // Kembalikan stok ke kondisi sebelum opname
+                    $produk->update(['stok' => $item->stok_sebelum]);
+                }
+            }
+
+            // Hapus semua transaksi opname terkait no_invoice
+            TransaksiStok::where('no_invoice', $no_invoice)->delete();
+
+            DB::commit();
+            return redirect()->back()->with('sukses', 'Data opname berhasil dihapus.');
+        } catch (\Exception $e) {
+            DB::rollBack();
+            return redirect()->back()->with('error', $e->getMessage());
+        }
+    }
+
     public function opname(Request $r)
     {
         $selectedPemilik = $r->pemilik ?? 'linda pribadi';
         $produk =  Produk::getAllProduk(null, $selectedPemilik);
-        $pemilik = Pemilik::all();
         $data = [
             'title' => 'Opname Stok',
             'selectedPemilik' => $selectedPemilik,
             'produk' => $produk,
-            'pemilik' => $pemilik
         ];
         return view('transaksi_stok.opname.index', $data);
     }
@@ -206,7 +307,8 @@ class TransaksiStokController extends Controller
 
     public function history_opname(Request $r)
     {
-        $datas = TransaksiStok::getHistory(null, 'opname');
+        $selectedPemilik = $r->pemilik ?? 'linda pribadi';
+        $datas = TransaksiStok::getHistory(null, 'opname', $selectedPemilik);
         $data = [
             'title' => 'History Opname',
             'datas' => $datas
