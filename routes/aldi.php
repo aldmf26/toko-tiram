@@ -1,4 +1,5 @@
 <?php
+
 use Illuminate\Support\Facades\Route;
 
 use App\Http\Controllers\ProdukController;
@@ -21,6 +22,7 @@ Route::group(['middleware' => ['auth:sanctum', 'verified']], function () {
 
             Route::get('/pemilik', 'pemilik')->name('pemilik');
             Route::get('/create_pemilik', 'create_pemilik')->name('create_pemilik');
+            Route::get('/edit', 'edit')->name('edit');
         });
 
     Route::controller(TransaksiStokController::class)
@@ -33,7 +35,7 @@ Route::group(['middleware' => ['auth:sanctum', 'verified']], function () {
             Route::get('/void', 'void')->name('void.penjualan');
             Route::get('/detail', 'detail_penjualan')->name('detail.penjualan');
             Route::get('/print', 'print_penjualan')->name('print.penjualan');
-            
+
             Route::get('/stok_masuk', 'stok_masuk')->name('stok_masuk');
             Route::post('/stok_masuk', 'save_stok_masuk')->name('save_stok_masuk');
             Route::get('/history_stok_masuk', 'history_stok_masuk')->name('history.stok_masuk');
@@ -45,7 +47,5 @@ Route::group(['middleware' => ['auth:sanctum', 'verified']], function () {
             Route::get('/history_opname', 'history_opname')->name('history.opname');
             Route::get('/print_opname', 'print_opname')->name('print.opname');
             Route::get('/void_opname', 'void_opname')->name('void.opname');
-
-
         });
 });

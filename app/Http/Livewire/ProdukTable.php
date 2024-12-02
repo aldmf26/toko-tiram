@@ -37,6 +37,6 @@ class ProdukTable extends Component
         ];
 
         return view('livewire.produk-table', $data) // Sesuaikan layout
-        ->with('pagination', 'vendor.livewire.simple-bootstrap');;
+            ->with('pagination', 'vendor.livewire.simple-bootstrap');;
     }
 }
