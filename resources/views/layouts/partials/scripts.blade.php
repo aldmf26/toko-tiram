@@ -36,7 +36,17 @@
         })
 
     }
+    document.addEventListener('livewire:load', function() {
+        initSelect2();
+    });
 
+    document.addEventListener('livewire:update', function() {
+        initSelect2();
+    });
+
+    function initSelect2() {
+        $('.selectDijual').select2();
+    }
 </script>
 
 @if (session()->has('sukses'))

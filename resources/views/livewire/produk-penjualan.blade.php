@@ -36,8 +36,8 @@
                                 {{-- <img class="p-1 card-img-top img-fluid "
                                     src="{{ strpos($d->foto, 'http') !== false ? $d->foto : asset('/uploads/' . $d->foto) }}"
                                     alt="Card image cap" style="height: 10rem"> --}}
-                                    <div class="p-2 pointer hovercard"
-                                    @click="$wire.call('addToCart', {{$d->id}})">
+                                <div class="p-2 pointer hovercard"
+                                    @click="$wire.call('addToCart', {{ $d->id }})">
                                     <div class="card-text">
                                         <div class="d-flex justify-content-between">
                                             <h6 class="pointer">({{ $d->kd_produk }}) {{ ucwords($d->nama_produk) }}
@@ -55,7 +55,7 @@
                                                 @endif
                                             </div>
                                         </div>
-                                            <p class="mt-2 text-primary text-sm">{{ '#' . $d->tags }}</p>
+                                        <p class="mt-2 text-primary text-sm">{{ '#' . $d->tags }}</p>
                                     </div>
                                 </div>
                             </div>
@@ -71,7 +71,11 @@
         <div class="col-lg-4">
             <form x-data="{
                 isDisabled: false,
-            }" action="{{ route('transaksi.save_pembayaran') }}" method="post">
+                initSelect2: function() {
+                    $('.selectDijual').select2();
+                },
+            }" x-init="initSelect2()" action="{{ route('transaksi.save_pembayaran') }}"
+                method="post">
                 @csrf
                 <h6>Order Details</h6>
 
@@ -108,7 +112,9 @@
                     <div class="mt-2">
                         <span>Dijual Ke</span>
                         <br>
-                        <select required name="dijual_ke" style="width: 100%" class="form-control-sm">
+
+                        <select required name="dijual_ke" style="width: 100%" x-init="initSelect2"
+                            class="selectDijual">
                             <option value="">Pilih Ke</option>
                             @foreach ($pemilik as $d)
                                 <option value="{{ $d->pemilik }}">{{ $d->pemilik }}</option>

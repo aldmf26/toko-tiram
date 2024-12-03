@@ -29,8 +29,11 @@ class ProdukTable extends Component
     {
         // Query data produk berdasarkan pencarian
         $products = Produk::query()
-            ->where('nama_produk', 'like', '%' . $this->search . '%')
-            ->orderBy('nama_produk', 'ASC')
+            ->where(function ($query) {
+                $query->where('nama_produk', 'like', '%' . $this->search . '%')
+                    ->orWhere('kd_produk', 'like', '%' . $this->search . '%');
+            })
+            ->orderBy('kd_produk', 'DESC')
             ->paginate($this->perPage);
         $data = [
             'produk' => $products

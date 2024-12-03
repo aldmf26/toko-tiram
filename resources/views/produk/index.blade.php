@@ -62,9 +62,19 @@
                                     @enderror
                                 </div>
                             </div>
+                            <div>
+                                
+                            </div>
                         </div>
                     </div>
-                    <div class="col-6">
+                    <div class="col-2">
+                        <div class="mb-1">
+                            <label for="ind" class="form-label">Kode</label>
+                            <input readonly value="{{ $kd_produk }}" type="text" class="form-control" name="kd_produk"
+                                required>
+                        </div>
+                    </div>
+                    <div class="col-4">
                         <div class="mb-1">
                             <label for="ind" class="form-label">Nama Produk</label>
                             <input placeholder="nama produk" type="text" class="form-control" name="nm_produk"

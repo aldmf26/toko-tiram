@@ -16,8 +16,10 @@ class ProdukController extends Controller
 
     public function index()
     {
+        $kd_produk = Produk::query()->latest('kd_produk')->value('kd_produk');
         $data = [
             'title' => 'Daftar Produk',
+            'kd_produk' => $kd_produk  + 1
         ];
         return view('produk.index', $data);
     }
@@ -103,6 +105,7 @@ class ProdukController extends Controller
             $deskripsi = $r->deskripsi;
             $hrg_beli = $r->hrg_beli;
             $hrg_jual = $r->hrg_jual;
+            $kd_produk = $r->kd_produk;
             $stok = $r->stok;
             $rak_id = $r->rak;
             $pemilik_id = $r->pemilik;
@@ -129,6 +132,7 @@ class ProdukController extends Controller
                 'rak_id' => $rak_id,
                 'pemilik_id' => $pemilik_id,
                 'hrg_beli' => $hrg_beli,
+                'kd_produk' => $kd_produk,
                 'admin' => $admin
             ]);
 

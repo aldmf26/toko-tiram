@@ -8,6 +8,7 @@
             <tr>
                 <th>#</th>
                 <th>Foto</th>
+                <th>Kode</th>
                 <th>Nama</th>
                 <th>Deskripsi</th>
                 <th>Tags</th>
@@ -30,6 +31,7 @@
                     </td>
 
 
+                    <td>{{$d->kd_produk}} </td>
                     <td>{{ $d->nama_produk }}</td>
                     <td>{{ $d->deskripsi }}</td>
                     <td class="text-primary">

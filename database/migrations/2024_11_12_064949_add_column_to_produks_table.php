@@ -19,7 +19,7 @@ return new class extends Migration
             $table->integer('satuan_id');
             $table->integer('rak_id');
             $table->integer('pemilik_id');
-            $table->string('kd_produk');
+            $table->integer('kd_produk');
         });
     }
 
