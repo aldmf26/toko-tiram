@@ -18,7 +18,7 @@
     </x-maz-sidebar-item>
     @role('presiden')
 
-    <x-maz-sidebar-item name="Data Master" icon="bi bi-person-circle">
+    <x-maz-sidebar-item name="Administrator" icon="bi bi-person-circle">
         <x-maz-sidebar-sub-item name="Daftar User" :link="route('produk.index')"></x-maz-sidebar-sub-item>
         {{-- <x-maz-sidebar-sub-item name="Daftar Rak / Satuan / Pemilik" :link="route('produk.daftar_rak')"></x-maz-sidebar-sub-item> --}}
     </x-maz-sidebar-item>
