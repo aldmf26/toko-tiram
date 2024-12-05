@@ -136,7 +136,6 @@
                         <div class="form-group">
                             <label for="">Rak</label>
                             <div id="rak"></div>
-
                         </div>
                     </div>
                     <div class="col-4">
@@ -156,7 +155,6 @@
 
             </x-modal>
         </form>
-
 
 
 
@@ -350,6 +348,10 @@
                 });
 
             });
+
+            
         </script>
+
+        
     @endsection
 </x-app-layout>

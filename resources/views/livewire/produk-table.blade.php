@@ -5,7 +5,8 @@
                 wire:model.debounce.300ms="search">
         </div>
         <div class="col-4">
-            <select wire:model="selectedRak" id="selectedRak" required name="rak" style="width: 100%" class="selectRak">
+            <select wire:model="selectedRak" id="selectedRakId" required name="rak" style="width: 100%"
+                class="selectRakFilter">
                 <option value="">Pilih Rak</option>
                 @foreach ($raks as $rak)
                     <option>{{ $rak->rak }}</option>
@@ -75,25 +76,25 @@
             {{ $produk->links('vendor.livewire.simple-bootstrap') }} <!-- Paginasi -->
         </div>
     </div>
-    @section('scripts')
+    {{-- @section('scripts')
         <script>
             document.addEventListener('livewire:load', function() {
-                $('.selectRak').select2();
+                $('.selectRakFilter').select2();
 
             });
 
             document.addEventListener('livewire:update', function() {
-                $('.selectRak').select2();
+                $('.selectRakFilter').select2();
 
             });
 
             $(document).ready(function() {
-                $('#selectedRak').on('change', function(e) {
+                $('#selectedRakId').on('change', function(e) {
                     livewire.emit('selectedRakItem', e.target.value)
                 });
-            
+
             });
         </script>
-    @endsection
+    @endsection --}}
 
 </div>
