@@ -71,9 +71,8 @@
         <div class="col-lg-4">
             <form x-data="{
                 isDisabled: false,
-               
-            }"  action="{{ route('transaksi.save_pembayaran') }}"
-                method="post">
+            
+            }" action="{{ route('transaksi.save_pembayaran') }}" method="post">
                 @csrf
                 <h6>Order Details</h6>
 
@@ -111,8 +110,7 @@
                         <span>Dijual Ke</span>
                         <br>
 
-                        <select required name="dijual_ke" style="width: 100%" x-init="initSelect2"
-                            class="selectDijual">
+                        <select required name="dijual_ke" style="width: 100%" class="selectDijual">
                             <option value="">Pilih Ke</option>
                             @foreach ($pemilik as $d)
                                 <option value="{{ $d->pemilik }}">{{ $d->pemilik }}</option>
@@ -144,5 +142,16 @@
         </div>
 
     </div>
+    @section('scripts')
+    <script>
+        document.addEventListener('livewire:load', function() {
+            $('.selectDijual').select2();
 
+        });
+
+        document.addEventListener('livewire:update', function() {
+            $('.selectDijual').select2();
+        });
+    </script>
+    @endsection
 </div>
