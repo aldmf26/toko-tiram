@@ -1,13 +1,12 @@
 <x-print :title="$title" :no_invoice="$datas[0]->no_invoice" :tanggal="$datas[0]->tanggal">
-    @php
-        $totalPrice = $datas->sum(fn($item) => $item->produk->harga * $item->jumlah);
-    @endphp
-
     <x-slot name="table">
         <table class="table table-sm">
             <tbody>
                 <tr>
                     <td scope="row" class="text-start">Pemilik</td>
+                    @php
+                        $cekSama = $datas[0]->produk->pemilik == $datas[0]->dijual_ke;
+                    @endphp
                     <td class="text-end">{{ $datas[0]->produk->pemilik }}</td>
                 </tr>
                 <tr>
@@ -42,7 +41,10 @@
                     <td>{{ $d->produk->nama_produk }}</td>
                     <td class="text-end">{{ number_format($d->produk->harga, 0) }}</td>
                     <td class="text-end">{{ number_format($d->jumlah, 0) }}</td>
-                    <td class="text-end">{{ number_format($d->produk->harga * $d->jumlah, 0) }}</td>
+                    @php
+                        $ttl = $cekSama ? 0 : $d->produk->harga * $d->jumlah;
+                    @endphp
+                    <td class="text-end">{{ number_format($ttl, 0) }}</td>
                 </tr>
             @endforeach
         </tbody>
@@ -53,7 +55,7 @@
                     <h5>{{ number_format($totalQty, 0) }}</h5>
                 </th>
                 <th class="text-end">
-                    <h5>{{ number_format($totalPrice, 0) }}</h5>
+                    <h5>{{ number_format($cekSama ? 0 : $totalPrice, 0) }}</h5>
                 </th>
             </tr>
         </tfoot>

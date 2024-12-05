@@ -71,10 +71,8 @@
         <div class="col-lg-4">
             <form x-data="{
                 isDisabled: false,
-                initSelect2: function() {
-                    $('.selectDijual').select2();
-                },
-            }" x-init="initSelect2()" action="{{ route('transaksi.save_pembayaran') }}"
+               
+            }"  action="{{ route('transaksi.save_pembayaran') }}"
                 method="post">
                 @csrf
                 <h6>Order Details</h6>
