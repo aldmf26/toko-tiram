@@ -6,7 +6,7 @@
         </div>
         <div class="col-4">
             <select wire:model="selectedRak" id="selectedRakId" required name="rak" style="width: 100%"
-                class="selectRakFilter">
+                class="selectRakFilter form-control">
                 <option value="">Pilih Rak</option>
                 @foreach ($raks as $rak)
                     <option>{{ $rak->rak }}</option>
