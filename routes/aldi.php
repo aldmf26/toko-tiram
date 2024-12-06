@@ -14,6 +14,7 @@ Route::group(['middleware' => ['auth:sanctum', 'verified']], function () {
             ->name('user.')
             ->group(function () {
                 Route::get('/', 'index')->name('index');
+                Route::post('/update', 'update')->name('update');
             });
         Route::controller(PermissionRoleController::class)
             ->prefix('permission')

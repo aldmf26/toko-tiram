@@ -2,8 +2,8 @@
     <x-slot name="header">
         <div class="d-flex justify-content-between">
             <h3>{{ $title }}</h3>
-            <button type="button" data-bs-toggle="modal" data-bs-target="#tambah" class="btn btn-primary"><i
-                    class="fa fa-plus"></i> Tambah</button>
+            {{-- <button type="button" data-bs-toggle="modal" data-bs-target="#tambah" class="btn btn-primary"><i
+                    class="fa fa-plus"></i> Tambah</button> --}}
         </div>
 
     </x-slot>
@@ -23,22 +23,56 @@
                             <th>Nama</th>
                             <th>Email</th>
                             <th>Role</th>
-                            <th>Aksi</th>
+                            <th width="200">Aksi</th>
                         </tr>
                     </thead>
                     <tbody>
                         @foreach ($users as $user)
-                            <tr>
-                                <td>{{ $loop->iteration }}</td>
-                                <td>{{ $user->name }}</td>
-                                <td>{{ $user->email }}</td>
-                                <td>
-                                    @foreach ($user->roles as $role)
-                                        {{ $role->name }}
-                                    @endforeach
-                                </td>
-                                <td></td>
-                            </tr>
+                            
+                                <tr x-data="{
+                                    edit: false
+                                }">
+                                    <td>
+                                        <form action="{{ route('user.update') }}" method="post">
+                                            @csrf
+                                        {{ $loop->iteration }}
+                                        <input type="hidden" name="id" value="{{ $user->id }}">
+                                    </td>
+
+                                    <td>
+                                        <span x-show="!edit">{{ $user->name }}</span>
+                                        <input type="text" x-show="edit" value="{{ $user->name }}"
+                                            class="form-control" name="name">
+                                    </td>
+
+                                    <td>
+                                        <span x-show="!edit">{{ $user->email }}</span>
+                                        <input type="text" x-show="edit" value="{{ $user->email }}"
+                                            class="form-control" name="email">
+                                    </td>
+
+                                    <td>
+                                        @foreach ($user->roles as $role)
+                                            <span x-show="!edit">{{ $role->name }}</span>
+                                        @endforeach
+                                        <select name="role" id="" x-show="edit" class="form-control">
+                                            <option value="">- Pilih role -</option>
+                                            @foreach ($roles as $r)
+                                                <option @selected($user->roles[0]->id == $r->id) value="{{ $r->id }}">{{ $r->name }}</option>
+                                            @endforeach
+                                        </select>
+                                    </td>
+                                    <td>
+                                        <a x-show="!edit" @click="edit = !edit" class="btn btn-sm btn-primary"><i
+                                                class="fa fa-edit"></i> Edit</a>
+                                        <a x-show="edit" @click="edit = !edit" class="btn btn-sm btn-primary">
+                                            Cancel</a>
+                                        <button type="submit" x-show="edit" class="btn btn-sm btn-success"><i
+                                                class="fa fa-check"></i>
+                                            Simpan</button>
+                                        </form>
+                                    </td>
+                                </tr>
                         @endforeach
                     </tbody>
                 </table>
