@@ -1,29 +1,52 @@
 <?php
 
+use App\Http\Controllers\PermissionRoleController;
 use Illuminate\Support\Facades\Route;
 
 use App\Http\Controllers\ProdukController;
 use App\Http\Controllers\TransaksiStokController;
+use App\Http\Controllers\UserController;
 
 Route::group(['middleware' => ['auth:sanctum', 'verified']], function () {
-    Route::controller(ProdukController::class)
-        ->prefix('produk')
-        ->name('produk.')
-        ->group(function () {
-            Route::get('/', 'index')->name('index');
-            Route::post('/', 'create')->name('create');
-            Route::get('/daftar_rak', 'daftar_rak')->name('daftar_rak');
+    Route::group(['middleware' => ['role:presiden']], function () {
+        Route::controller(UserController::class)
+            ->prefix('user')
+            ->name('user.')
+            ->group(function () {
+                Route::get('/', 'index')->name('index');
+            });
+        Route::controller(PermissionRoleController::class)
+            ->prefix('permission')
+            ->name('permission.')
+            ->group(function () {
+                Route::get('/', 'index')->name('index');
+                Route::post('/', 'store')->name('store');
+                Route::post('/update', 'update')->name('update');
+                Route::get('/destroy/{id}', 'destroy')->name('destroy');
+            });
+    });
 
-            Route::get('/satuan', 'satuan')->name('satuan');
-            Route::get('/create_satuan', 'create_satuan')->name('create_satuan');
+    Route::group(['middleware' => ['role:presiden|superadmin']], function () {
+        Route::controller(ProdukController::class)
+            ->prefix('produk')
+            ->name('produk.')
+            ->group(function () {
+                Route::get('/', 'index')->name('index');
+                Route::post('/', 'create')->name('create');
+                Route::get('/daftar_rak', 'daftar_rak')->name('daftar_rak');
 
-            Route::get('/rak', 'rak')->name('rak');
-            Route::get('/create_rak', 'create_rak')->name('create_rak');
+                Route::get('/satuan', 'satuan')->name('satuan');
+                Route::get('/create_satuan', 'create_satuan')->name('create_satuan');
 
-            Route::get('/pemilik', 'pemilik')->name('pemilik');
-            Route::get('/create_pemilik', 'create_pemilik')->name('create_pemilik');
-            Route::get('/edit', 'edit')->name('edit');
-        });
+                Route::get('/rak', 'rak')->name('rak');
+                Route::get('/create_rak', 'create_rak')->name('create_rak');
+
+                Route::get('/pemilik', 'pemilik')->name('pemilik');
+                Route::get('/create_pemilik', 'create_pemilik')->name('create_pemilik');
+                Route::get('/edit', 'edit')->name('edit');
+            });
+    });
+
 
     Route::controller(TransaksiStokController::class)
         ->prefix('produk/transaksi')

@@ -2,8 +2,10 @@
     <x-slot name="header">
         <div class="d-flex justify-content-between">
             <h3>{{ $title }}</h3>
+            @can('produk.create')
             <button type="button" data-bs-toggle="modal" data-bs-target="#tambah" class="btn btn-primary"><i
                     class="fa fa-plus"></i> Tambah</button>
+                    @endcan
         </div>
 
     </x-slot>
@@ -21,6 +23,7 @@
         @livewire('produk-table')
 
 
+        @can('produk.create')
         <form action="{{ route('produk.create') }}" method="post" enctype="multipart/form-data">
             @csrf
             <x-modal idModal="tambah" size="modal-lg" title="Tambah Produk" btnSave="Y">
@@ -147,6 +150,7 @@
                 </div>
             </x-modal>
         </form>
+        @endcan
         <form action="{{ route('produk.create') }}" method="post" enctype="multipart/form-data">
             @csrf
             <x-modal idModal="edit" size="modal-lg" title="Edit Produk" btnSave="Y">

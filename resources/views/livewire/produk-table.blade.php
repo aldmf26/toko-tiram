@@ -53,12 +53,17 @@
                     </td>
                     <td align="right">{{ number_format($d->hrg_beli, 0) }} / {{ number_format($d->harga, 0) }}</td>
                     <td align="right">{{ $d->stok }}</td>
+
                     <td align="center">
-                        <button class="btn btn-sm btn-primary edit_produk" id_produk="{{ $d->id }}"
-                            data-bs-toggle="modal" data-bs-target="#edit">
-                            <i class="fa fa-edit"></i>
-                        </button>
-                        <button class="btn btn-sm btn-danger"><i class="fa fa-trash"></i></button>
+                        @can('produk.update')
+                            <button class="btn btn-sm btn-primary edit_produk" id_produk="{{ $d->id }}"
+                                data-bs-toggle="modal" data-bs-target="#edit">
+                                <i class="fa fa-edit"></i>
+                            </button>
+                        @endcan
+                        @can('produk.delete')
+                            <button class="btn btn-sm btn-danger"><i class="fa fa-trash"></i></button>
+                        @endcan
                     </td>
                 </tr>
             @endforeach

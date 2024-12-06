@@ -28,11 +28,11 @@
                         <td class="text-start">{{ $d->no_invoice }}</td>
                         <td>{{ $d->admin }}</td>
                         <td align="center">
-                            @role('presiden')
+                            @can('history.stok_masuk.void')
                                 <a onclick="return confirm('Yakin void?')"
                                     href="{{ route('transaksi.void.stok_masuk', ['no_invoice' => $d->no_invoice]) }}"
                                     class="btn btn-sm btn-danger">void</a>
-                            @endrole 
+                            @endcan 
 
                             <a target="_blank"
                                 href="{{ route('transaksi.print.stok_masuk', ['no_invoice' => $d->no_invoice]) }}"

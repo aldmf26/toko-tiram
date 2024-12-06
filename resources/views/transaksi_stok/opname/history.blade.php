@@ -30,11 +30,11 @@
                         <td class="text-start">{{ $d->no_invoice }}</td>
                         <td>{{ $d->admin }}</td>
                         <td align="center">
-                            @role('presiden')
+                            @can('history.opname.void')
                                 <a onclick="return confirm('Yakin void?')"
                                     href="{{ route('transaksi.void.opname', ['no_invoice' => $d->no_invoice]) }}"
                                     class="btn btn-sm btn-danger">void</a>
-                            @endrole 
+                            @endcan 
 
                             <a target="_blank"
                                 href="{{ route('transaksi.print.opname', ['no_invoice' => $d->no_invoice]) }}"

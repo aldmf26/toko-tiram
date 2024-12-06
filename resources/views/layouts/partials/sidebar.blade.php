@@ -4,7 +4,7 @@
 
     {{-- <x-maz-sidebar-item name="Dashboard" :link="route('dashboard')" icon="bi bi-grid-fill"></x-maz-sidebar-item> --}}
    
-    @role('presiden')
+    @role('presiden|superadmin')
     <x-maz-sidebar-item name="Produk" icon="bi bi-shop-window">
         <x-maz-sidebar-sub-item name="Daftar Produk" :link="route('produk.index')"></x-maz-sidebar-sub-item>
         {{-- <x-maz-sidebar-sub-item name="Daftar Rak / Satuan / Pemilik" :link="route('produk.daftar_rak')"></x-maz-sidebar-sub-item> --}}
@@ -19,7 +19,8 @@
     @role('presiden')
 
     <x-maz-sidebar-item name="Administrator" icon="bi bi-person-circle">
-        <x-maz-sidebar-sub-item name="Daftar User" :link="route('produk.index')"></x-maz-sidebar-sub-item>
+        <x-maz-sidebar-sub-item name="Daftar User" :link="route('user.index')"></x-maz-sidebar-sub-item>
+        <x-maz-sidebar-sub-item name="Role & Permission" :link="route('permission.index')"></x-maz-sidebar-sub-item>
         {{-- <x-maz-sidebar-sub-item name="Daftar Rak / Satuan / Pemilik" :link="route('produk.daftar_rak')"></x-maz-sidebar-sub-item> --}}
     </x-maz-sidebar-item>
     @endrole

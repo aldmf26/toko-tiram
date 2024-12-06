@@ -39,11 +39,12 @@
                         <td>{{ $d->ket }}</td>
                         <td>{{ $d->admin }}</td>
                         <td>
-                            @role('presiden')
+                            @can('history.penjualan.void')
                                 <a onclick="return confirm('Yakin void?')"
                                     href="{{ route('transaksi.void.penjualan', ['no_invoice' => $d->no_invoice]) }}"
                                     class="btn btn-sm btn-danger">void</a>
-                            @endrole
+                            @endcan
+
                             <a href="#" no_invoice="{{ $d->no_invoice }}"
                                 class="btn btn-sm btn-primary detail"><i class="fas fa-eye"></i></a>
                             <a target="_blank"
