@@ -28,7 +28,8 @@ class PermissionRoleController extends Controller
         ]);
 
         Role::create([
-            'name' => $r->role
+            'name' => $r->role,
+            'guard_name' => 'web'
         ]);
 
         return redirect()->route('permission.index')->with(['sukses' => 'Permission Role Added']);
