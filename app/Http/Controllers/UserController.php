@@ -24,14 +24,16 @@ class UserController extends Controller
 
     public function update(Request $r)
     {
-        $user = User::findOrFail($r->id); // Ambil instance user
-        $user->update([
-            'name' => $r->name,
-            'email' => $r->email,
-        ]);
-
-        // Sinkronkan role
-        $user->roles()->sync([$r->role]);
+        for ($i=0; $i < count($r->id); $i++) { 
+            $user = User::findOrFail($r->id[$i]); // Ambil instance user
+            $user->update([
+                'name' => $r->name[$i],
+                'email' => $r->email[$i],
+            ]);
+    
+            // Sinkronkan role
+            $user->roles()->sync([$r->role[$i]]);
+        }
 
         return redirect()->route('user.index')->with(['sukses' => 'User Updated']);
     }
