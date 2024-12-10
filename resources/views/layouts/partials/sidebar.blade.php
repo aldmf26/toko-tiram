@@ -15,7 +15,7 @@
     <x-maz-sidebar-item name="Transaksi" icon="bi bi-shop-window">
         <x-maz-sidebar-sub-item name="Transaksi" :link="route('transaksi.penjualan')"></x-maz-sidebar-sub-item>
         <x-maz-sidebar-sub-item name="History" :link="route('transaksi.history.penjualan')"></x-maz-sidebar-sub-item>
-    </x-maz-sidebar-item>
+    </x-maz-sidebar-item>   
     @role('presiden')
 
     <x-maz-sidebar-item name="Administrator" icon="bi bi-person-circle">

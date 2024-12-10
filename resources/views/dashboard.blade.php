@@ -16,16 +16,30 @@
 
 
     <section class="section">
-        <div class="card">
+        <div class="card ">
             <div class="card-header">
-                <h4 class="card-title">Example Content</h4>
+                <h4 class="card-title">Menu</h4>
             </div>
             <div class="card-body">
-                Lorem ipsum dolor sit amet consectetur adipisicing elit. Consectetur quas omnis
-                laudantium tempore
-                exercitationem, expedita aspernatur sed officia asperiores unde tempora maxime odio
-                reprehenderit
-                distinctio incidunt! Vel aspernatur dicta consequatur!
+                <div class="row">
+                    <div class="col-lg-3" bis_skin_checked="1">
+                        <a href="{{route('transaksi.penjualan')}}">
+                            <div 
+                                class="card border card-hover  bg-info" bis_skin_checked="1">
+                                <div class="card-front" bis_skin_checked="1">
+                                    <div class="card-body" bis_skin_checked="1">
+                                        <h4 class="card-title text-white text-center"><img
+                                                src="https://sarang.ptagafood.com/img/kelas.png" width="100"
+                                                alt=""><br><br>
+                                            Transaksi Penjualan
+                                        </h4>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </a>
+                    </div>
+                </div>
             </div>
         </div>
     </section>
