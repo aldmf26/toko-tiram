@@ -46,9 +46,7 @@
                     <td>
                         <div class="d-flex justify-content-center" style="max-width: 130px; height: 100px;">
                             <img style="width: 90px; height: 90px" class="mx-auto mh-100"
-                                src="{{ @getimagesize(public_path('/uploads/' . $d->foto))
-                                    ? asset('/uploads/' . $d->foto)
-                                    : asset('/uploads/default.jpg') }}">
+                                src="{{ asset('/uploads/' . $d->foto) }}">
                         </div>
                     </td>
 
