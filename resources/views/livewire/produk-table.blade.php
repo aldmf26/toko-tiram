@@ -51,7 +51,7 @@
                     </td>
 
 
-                    <td>{{ $d->kd_produk }} </td>
+                    <td>{{ $d->kd_produk . $d->foto }} </td>
                     <td>{{ $d->nama_produk }}</td>
                     <td>{{ $d->rak->rak }} </td>
                     <td>{{ $d->deskripsi }}</td>
