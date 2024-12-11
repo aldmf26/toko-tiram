@@ -1,15 +1,24 @@
 <div>
     <div class="row mb-4 mt-3">
-        <div class="col-8">
+        <div class="col-6">
             <input autofocus type="text" class="form-control" placeholder="Cari Produk..."
                 wire:model.debounce.300ms="search">
         </div>
-        <div class="col-4">
+        <div class="col-3">
             <select wire:model="selectedRak" id="selectedRakId" required name="rak" style="width: 100%"
                 class="selectRakFilter form-control">
                 <option value="">Pilih Rak</option>
                 @foreach ($raks as $rak)
                     <option>{{ $rak->rak }}</option>
+                @endforeach
+            </select>
+        </div>
+        <div class="col-3">
+            <select wire:model="selectedPemilik" id="selectedRakId" required name="rak" style="width: 100%"
+                class="selectRakFilter form-control">
+                <option value="">Pilih Pemilik</option>
+                @foreach ($pemiliks as $pemilik)
+                    <option>{{ $pemilik->pemilik }}</option>
                 @endforeach
             </select>
         </div>
@@ -35,12 +44,12 @@
                 <tr>
                     <td>{{ $i + 1 }}</td>
                     <td>
-                        <div class="d-flex justify-content-center" style="max-width: 130px; height: 100px;">
+                        {{-- <div class="d-flex justify-content-center" style="max-width: 130px; height: 100px;">
                             <img style="width: 90px; height: 90px" class="mx-auto mh-100"
                                 src="{{ @getimagesize(public_path('/uploads/' . $d->foto))
                                     ? asset('/uploads/' . $d->foto)
                                     : asset('/uploads/default.jpg') }}">
-                        </div>
+                        </div> --}}
                     </td>
 
 

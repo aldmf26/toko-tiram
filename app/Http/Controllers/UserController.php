@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Spatie\Permission\Models\Role;
 
 class UserController extends Controller
@@ -19,6 +20,15 @@ class UserController extends Controller
             'roles' => $role
         ];
         return view('user.index', $data);
+    }
+
+    public function absen()
+    {
+        $data = [
+            'title' => 'Absen',
+            'absen' => DB::table('tglcoba')->get()
+        ];
+        return view('user.absen',$data);
     }
 
 

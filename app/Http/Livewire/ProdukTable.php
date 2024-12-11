@@ -2,6 +2,7 @@
 
 namespace App\Http\Livewire;
 
+use App\Models\Pemilik;
 use Livewire\Component;
 use Livewire\WithPagination; // Untuk paginasi
 use App\Models\Produk; // Import model Produk
@@ -11,12 +12,13 @@ class ProdukTable extends Component
 {
     use WithPagination;
     public $selectedRak = null;
+    public $selectedPemilik = null;
 
     public $search = ''; // Untuk fitur pencarian
     public $perPage = 10; // Jumlah data per halaman
 
     // Listener untuk menangkap event reset pencarian
-    protected $listeners = ['resetSearch' => 'resetSearch', 'selectedRakItem'];
+    protected $listeners = ['resetSearch' => 'resetSearch', 'selectedRakItem', 'selectedPemilikItem'];
 
 
     public function resetSearch()
@@ -27,6 +29,14 @@ class ProdukTable extends Component
     public function selectedRakItem($rak)
     {
         $this->selectedRak = $rak;
+        $this->resetPage();
+    }
+
+
+    public function selectedPemilikItem($pemilik)
+    {
+        $this->selectedPemilik = $pemilik;
+        dd($this->selectedPemilik);
         $this->resetPage();
     }
 
@@ -44,6 +54,11 @@ class ProdukTable extends Component
                     $query->where('rak', $this->selectedRak);
                 });
             })
+            ->when($this->selectedPemilik, function ($query) {
+                $query->whereHas('pemilik', function ($query) {
+                    $query->where('pemilik', $this->selectedPemilik);
+                });
+            })
             ->when($this->search, function ($query) {
                 $query->where(function ($query) {
                     $query->where('nama_produk', 'like', '%' . $this->search . '%')
@@ -55,7 +70,8 @@ class ProdukTable extends Component
 
         $data = [
             'produk' => $products,
-            'raks' => Rak::all()
+            'raks' => Rak::all(),
+            'pemiliks' => Pemilik::all(),
         ];
 
         return view('livewire.produk-table', $data) // Sesuaikan layout

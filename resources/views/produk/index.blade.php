@@ -3,9 +3,9 @@
         <div class="d-flex justify-content-between">
             <h3>{{ $title }}</h3>
             @can('produk.create')
-            <button type="button" data-bs-toggle="modal" data-bs-target="#tambah" class="btn btn-primary"><i
-                    class="fa fa-plus"></i> Tambah</button>
-                    @endcan
+                <button type="button" data-bs-toggle="modal" data-bs-target="#tambah" class="btn btn-primary"><i
+                        class="fa fa-plus"></i> Tambah</button>
+            @endcan
         </div>
 
     </x-slot>
@@ -24,28 +24,28 @@
 
 
         @can('produk.create')
-        <form action="{{ route('produk.create') }}" method="post" enctype="multipart/form-data">
-            @csrf
-            <x-modal idModal="tambah" size="modal-lg" title="Tambah Produk" btnSave="Y">
-                <div class="row p-2" x-data="{
-                    imageBy: 'upload',
-                }">
-                    <div class="col-12 col-md-6 col-lg-4 col-xl-3 mb-3 p-3">
-                        <div class="position-relative" x-show="imageBy === 'upload'">
-                            <img id="bookCoverPreview" src="{{ asset('uploads/default.jpg') }}" alt=""
-                                height="300" class="img-fluid z-1">
-                            <div class="position-absolute top-50 start-50 translate-middle z-0 d-none"
-                                id="imagePreviewContainer">
-                                <img id="imagePreview" src="" alt="" class="img-fluid">
+            <form action="{{ route('produk.create') }}" method="post" enctype="multipart/form-data">
+                @csrf
+                <x-modal idModal="tambah" size="modal-lg" title="Tambah Produk" btnSave="Y">
+                    <div class="row p-2" x-data="{
+                        imageBy: 'upload',
+                    }">
+                        <div class="col-12 col-md-6 col-lg-4 col-xl-3 mb-3 p-3">
+                            <div class="position-relative" x-show="imageBy === 'upload'">
+                                <img id="bookCoverPreview" src="{{ asset('uploads/default.jpg') }}" alt=""
+                                    height="300" class="img-fluid z-1">
+                                <div class="position-absolute top-50 start-50 translate-middle z-0 d-none"
+                                    id="imagePreviewContainer">
+                                    <img id="imagePreview" src="" alt="" class="img-fluid">
+                                </div>
                             </div>
                         </div>
-                    </div>
 
-                    <div class="col-12">
-                        <label for="image" class="form-label">Gambar</label>
+                        <div class="col-12">
+                            <label for="image" class="form-label">Gambar</label>
 
-                        <div class="d-flex align-items-center gap-2">
-                            {{-- <div>
+                            <div class="d-flex align-items-center gap-2">
+                                {{-- <div>
                                 <label class="btn btn-outline-danger" for="danger-outlined">By Url</label>
                                 <input @change="imageBy = 'upload'" type="radio" class="btn-check"
                                     name="options-outlined" id="success-outlined" autocomplete="off" checked="">
@@ -55,101 +55,101 @@
                                 <input @change="imageBy = 'url'" type="radio" class="btn-check"
                                     name="options-outlined" id="danger-outlined" autocomplete="off">
                             </div> --}}
-                            <div class="">
-                                <input class="form-control @error('image') is-invalid @enderror"
-                                    :type="imageBy === 'upload' ? 'file' : 'text'" id="image" name="image"
-                                    onchange="previewImage(event)">
-                                <div class="invalid-feedback">
-                                    @error('image')
-                                        {{ $message }}
-                                    @enderror
+                                <div class="">
+                                    <input class="form-control @error('image') is-invalid @enderror"
+                                        :type="imageBy === 'upload' ? 'file' : 'text'" id="image" name="image"
+                                        onchange="previewImage(event)">
+                                    <div class="invalid-feedback">
+                                        @error('image')
+                                            {{ $message }}
+                                        @enderror
+                                    </div>
+                                </div>
+                                <div>
+
                                 </div>
                             </div>
-                            <div>
-                                
+                        </div>
+                        <div class="col-2">
+                            <div class="mb-1">
+                                <label for="ind" class="form-label">Kode</label>
+                                <input readonly value="{{ $kd_produk }}" type="text" class="form-control"
+                                    name="kd_produk" required>
+                            </div>
+                        </div>
+                        <div class="col-4">
+                            <div class="mb-1">
+                                <label for="ind" class="form-label">Nama Produk</label>
+                                <input placeholder="nama produk" type="text" class="form-control" name="nm_produk"
+                                    required>
+                            </div>
+                        </div>
+                        <div class="col-6">
+                            <div x-data="tagsInput()" class="mb-1">
+                                <label for="ind" class="form-label">Tags</label>
+                                <div class="input-group">
+                                    <input x-model="input" @keydown.enter.prevent="addTag" @keydown.comma.prevent="addTag"
+                                        type="text" class="form-control" placeholder="pisahkan tags dengan koma (,)"
+                                        autocomplete="off">
+                                    <span class="input-group-text">#</span>
+                                </div>
+                                <div class="tags-container mt-2">
+                                    <template x-for="(tag, index) in tags" :key="index">
+                                        <span class="badge bg-primary text-white d-inline-block m-1 p-2" x-text="tag + ' x'"
+                                            @click="removeTag(index)" style="cursor: pointer; display: inline-block;">
+                                            <span class="ms-2">&times;</span>
+                                        </span>
+                                    </template>
+                                    <input type="hidden" name="tags" :value="tags.join(',')" />
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-12">
+                            <div class="mb-1">
+                                <label for="ind" class="form-label">Deskripsi</label>
+                                <input placeholder="deskripsi" type="text" class="form-control" name="deskripsi"
+                                    required>
+                            </div>
+                        </div>
+                        <div class="col-4">
+                            <div class="form-group">
+                                <label for="">Harga Beli</label>
+                                <input type="text" name="hrg_beli" class="form-control">
+                            </div>
+                        </div>
+                        <div class="col-4">
+                            <div class="form-group">
+                                <label for="">Harga Jual</label>
+                                <input type="text" name="hrg_jual" class="form-control">
+                            </div>
+                        </div>
+                        <div class="col-4">
+                            <div class="form-group">
+                                <label for="">Stok</label>
+                                <input type="text" name="stok" class="form-control">
+                            </div>
+                        </div>
+                        <div class="col-4">
+                            <div class="form-group">
+                                <label for="">Satuan</label>
+                                <div id="satuan"></div>
+                            </div>
+                        </div>
+                        <div class="col-4">
+                            <div class="form-group">
+                                <label for="">Rak</label>
+                                <div id="rak"></div>
+                            </div>
+                        </div>
+                        <div class="col-4">
+                            <div class="form-group">
+                                <label for="">Pemilik</label>
+                                <div id="pemilik"></div>
                             </div>
                         </div>
                     </div>
-                    <div class="col-2">
-                        <div class="mb-1">
-                            <label for="ind" class="form-label">Kode</label>
-                            <input readonly value="{{ $kd_produk }}" type="text" class="form-control" name="kd_produk"
-                                required>
-                        </div>
-                    </div>
-                    <div class="col-4">
-                        <div class="mb-1">
-                            <label for="ind" class="form-label">Nama Produk</label>
-                            <input placeholder="nama produk" type="text" class="form-control" name="nm_produk"
-                                required>
-                        </div>
-                    </div>
-                    <div class="col-6">
-                        <div x-data="tagsInput()" class="mb-1">
-                            <label for="ind" class="form-label">Tags</label>
-                            <div class="input-group">
-                                <input x-model="input" @keydown.enter.prevent="addTag" @keydown.comma.prevent="addTag"
-                                    type="text" class="form-control" placeholder="pisahkan tags dengan koma (,)"
-                                    autocomplete="off">
-                                <span class="input-group-text">#</span>
-                            </div>
-                            <div class="tags-container mt-2">
-                                <template x-for="(tag, index) in tags" :key="index">
-                                    <span class="badge bg-primary text-white d-inline-block m-1 p-2" x-text="tag + ' x'"
-                                        @click="removeTag(index)" style="cursor: pointer; display: inline-block;">
-                                        <span class="ms-2">&times;</span>
-                                    </span>
-                                </template>
-                                <input type="hidden" name="tags" :value="tags.join(',')" />
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-12">
-                        <div class="mb-1">
-                            <label for="ind" class="form-label">Deskripsi</label>
-                            <input placeholder="deskripsi" type="text" class="form-control" name="deskripsi"
-                                required>
-                        </div>
-                    </div>
-                    <div class="col-4">
-                        <div class="form-group">
-                            <label for="">Harga Beli</label>
-                            <input type="text" name="hrg_beli" class="form-control">
-                        </div>
-                    </div>
-                    <div class="col-4">
-                        <div class="form-group">
-                            <label for="">Harga Jual</label>
-                            <input type="text" name="hrg_jual" class="form-control">
-                        </div>
-                    </div>
-                    <div class="col-4">
-                        <div class="form-group">
-                            <label for="">Stok</label>
-                            <input type="text" name="stok" class="form-control">
-                        </div>
-                    </div>
-                    <div class="col-4">
-                        <div class="form-group">
-                            <label for="">Satuan</label>
-                            <div id="satuan"></div>
-                        </div>
-                    </div>
-                    <div class="col-4">
-                        <div class="form-group">
-                            <label for="">Rak</label>
-                            <div id="rak"></div>
-                        </div>
-                    </div>
-                    <div class="col-4">
-                        <div class="form-group">
-                            <label for="">Pemilik</label>
-                            <div id="pemilik"></div>
-                        </div>
-                    </div>
-                </div>
-            </x-modal>
-        </form>
+                </x-modal>
+            </form>
         @endcan
         <form action="{{ route('produk.create') }}" method="post" enctype="multipart/form-data">
             @csrf
@@ -352,10 +352,6 @@
                 });
 
             });
-
-            
         </script>
-
-        
     @endsection
 </x-app-layout>
