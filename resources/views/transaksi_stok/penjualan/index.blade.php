@@ -13,7 +13,7 @@
         @include('transaksi_stok.nav')
         <x-alert pesan="{{ session()->get('error') }}" />
         @livewire('produk-penjualan')
-       
+
     </div>
 
 </x-app-layout>

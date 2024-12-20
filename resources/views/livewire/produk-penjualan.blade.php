@@ -56,6 +56,7 @@
                                             </div>
                                         </div>
                                         <p class="mt-2 text-primary text-sm">{{ '#' . $d->tags }}</p>
+                                        <p class="mt-2  text-sm">pemilik : {{ $d->pemilik->pemilik }}</p>
                                     </div>
                                 </div>
                             </div>
@@ -143,15 +144,15 @@
 
     </div>
     @section('scripts')
-    <script>
-        document.addEventListener('livewire:load', function() {
-            $('.selectDijual').select2();
+        <script>
+            document.addEventListener('livewire:load', function() {
+                $('.selectDijual').select2();
 
-        });
+            });
 
-        document.addEventListener('livewire:update', function() {
-            $('.selectDijual').select2();
-        });
-    </script>
+            document.addEventListener('livewire:update', function() {
+                $('.selectDijual').select2();
+            });
+        </script>
     @endsection
 </div>

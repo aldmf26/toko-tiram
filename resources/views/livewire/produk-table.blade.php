@@ -34,6 +34,7 @@
                 <th>Rak</th>
                 <th>Deskripsi</th>
                 <th>Tags</th>
+                <th>Pemilik</th>
                 <th class="text-end">Harga Beli / Jual</th>
                 <th class="text-end">Stok</th>
                 <th class="text-center">Aksi</th>
@@ -59,6 +60,7 @@
                     <td class="text-primary">
                         {{ $d->tags }}
                     </td>
+                    <td>{{ $d->pemilik->pemilik }}</td>
                     <td align="right">{{ number_format($d->hrg_beli, 0) }} / {{ number_format($d->harga, 0) }}</td>
                     <td align="right">{{ $d->stok }}</td>
 
