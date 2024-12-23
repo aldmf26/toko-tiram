@@ -37,6 +37,7 @@
                                     src="{{ strpos($d->foto, 'http') !== false ? $d->foto : asset('/uploads/' . $d->foto) }}"
                                     alt="Card image cap" style="height: 10rem"> --}}
                                 <div wire:click="addToCart({{ $d->id }})" class="p-2 pointer hovercard"
+                                   >
                                     <div class="card-text">
                                         <div class="d-flex justify-content-between">
                                             <h6 class="pointer">({{ $d->kd_produk }}) {{ ucwords($d->nama_produk) }}
