@@ -20,7 +20,7 @@
 
             {{-- produk view --}}
             <div wire:loading wire:target="search,selectedTag">
-                <div class="spinner-border text-primary" role="status">
+                <div class="spinner-border text-primary mt-1" role="status">
                     <span class="visually-hidden">Loading...</span>
                 </div>
             </div>
