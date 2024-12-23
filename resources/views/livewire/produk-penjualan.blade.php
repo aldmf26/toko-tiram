@@ -2,8 +2,8 @@
     <x-alert pesan="{{ session()->get('error') }}" />
     <div class="row mt-4">
         <div class="col-lg-8">
-            <input wire:model.debounce.500ms="search" type="text" class="form-control" placeholder="cari nama produk"
-                autofocus>
+            <input wire:model.live.debounce.500ms="search" type="text" class="form-control"
+                placeholder="cari nama produk" autofocus>
 
             {{-- kategori tags --}}
             <div class="mt-3 d-flex flex-wrap gap-2">
@@ -92,7 +92,7 @@
                                         <span>Qty</span>
                                         <input type="number" name="orderDetails[{{ $order['id'] }}][quantity]"
                                             style="width: 60px" class="form-control"
-                                            wire:model="orderDetails.{{ $order['id'] }}.quantity" min="1"
+                                            wire:model.live="orderDetails.{{ $order['id'] }}.quantity" min="1"
                                             max="{{ $order['stok'] }}">
                                     </div>
                                     <span>{{ number_format($order['price'] * $order['quantity'], 0) }}</span>
@@ -110,23 +110,26 @@
                     <div class="mt-2">
                         <span>Dijual Ke</span>
                         <br>
+                        <div wire:ignore x-data x-init="() => {
+                            $('.select2dijual').select2();
+                            $('.select2dijual').on('change', function() {
+                                @this.set('named', $(this).val())
+                            })
+                        }">
+                            <select class="select2dijual" name="dijual_ke">
+                                <option value="">Dijual ke</option>
+                                @foreach ($pemilik as $d)
+                                    <option value="{{ $d->pemilik }}">{{ $d->pemilik }}</option>
+                                @endforeach
+                            </select>
+                        </div>
 
-                        <select required name="dijual_ke" style="width: 100%" class="selectDijual">
-                            <option value="">Pilih Ke</option>
-                            @foreach ($pemilik as $d)
-                                <option value="{{ $d->pemilik }}">{{ $d->pemilik }}</option>
-                            @endforeach
-                        </select>
                     </div>
                     <div class="mt-2">
                         <span>keterangan</span>
                         <input required type="text" placeholder="untuk apa ?" class="form-control" name="keterangan">
                     </div>
-                    @foreach ($orderDetails as $d)
-                        <input type="hidden" value="{{ $d['id'] }}" name="id_produk[]">
-                        <input type="hidden" value="{{ $d['quantity'] }}" name="qty[]">
-                        <input type="hidden" value="{{ $d['price'] }}" name="price[]">
-                    @endforeach
+
 
                     <input type="hidden" name="totalPrice" value="{{ $totalPrice }}">
                     <button x-show="!isDisabled" @click="isDisabled = true" type="submit"
@@ -143,16 +146,22 @@
         </div>
 
     </div>
-    @section('scripts')
-        <script>
-            document.addEventListener('livewire:load', function() {
-                $('.selectDijual').select2();
 
-            });
 
-            document.addEventListener('livewire:update', function() {
-                $('.selectDijual').select2();
-            });
-        </script>
-    @endsection
+
+    <script>
+        document.addEventListener("livewire:initialized", () => {
+
+            $(".select2dijual").select2()
+
+                .on("change", function() {
+
+                    const values = $(this).val();
+                    console.log(values);
+
+                    @this.named = values;
+                    // @this.set("named", value); -- use this syntax to emulate wire:model.live
+                });
+        });
+    </script>
 </div>

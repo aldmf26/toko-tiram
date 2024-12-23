@@ -2,10 +2,10 @@
     <div class="row mb-4 mt-3">
         <div class="col-6">
             <input autofocus type="text" class="form-control" placeholder="Cari Produk..."
-                wire:model.debounce.300ms="search">
+                wire:model.live.debounce.300ms="search">
         </div>
         <div class="col-3">
-            <select wire:model="selectedRak" id="selectedRakId" required name="rak" style="width: 100%"
+            <select wire:model.live="selectedRak" id="selectedRakId" required name="rak" style="width: 100%"
                 class="selectRakFilter form-control">
                 <option value="">Pilih Rak</option>
                 @foreach ($raks as $rak)
@@ -14,7 +14,7 @@
             </select>
         </div>
         <div class="col-3">
-            <select wire:model="selectedPemilik" id="selectedRakId" required name="rak" style="width: 100%"
+            <select wire:model.live="selectedPemilik" id="selectedRakId" required name="rak" style="width: 100%"
                 class="selectRakFilter form-control">
                 <option value="">Pilih Pemilik</option>
                 @foreach ($pemiliks as $pemilik)
@@ -81,7 +81,7 @@
     </table>
     <div class="mt-3 d-flex justify-content-between">
         <div>
-            <select class="form-select" wire:model="perPage">
+            <select class="form-select" wire:model.live="perPage">
                 <option value="5">5</option>
                 <option value="10">10</option>
                 <option value="25">50</option>
@@ -93,7 +93,7 @@
     </div>
     {{-- @section('scripts')
         <script>
-            document.addEventListener('livewire:load', function() {
+            document.addEventListener('livewire:init', function() {
                 $('.selectRakFilter').select2();
 
             });

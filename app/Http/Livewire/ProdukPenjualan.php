@@ -15,6 +15,8 @@ class ProdukPenjualan extends Component
     public $perPage = 6;
     public $selectedTag = 'linda pribadi';
     public $orderDetails = [];
+   
+
     public function mount()
     {
         // Ambil tags dan produk awal
@@ -38,6 +40,8 @@ class ProdukPenjualan extends Component
     {
         $this->perPage += 10;
     }
+
+    
 
     public function addToCart($produkId)
     {

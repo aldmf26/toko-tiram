@@ -14,7 +14,7 @@
         </div>
 
         <!-- Delete User Confirmation Modal -->
-        <x-jet-dialog-modal wire:model="confirmingUserDeletion">
+        <x-jet-dialog-modal wire:model.live="confirmingUserDeletion">
             <x-slot name="title">
                 {{ __('Delete Account') }}
             </x-slot>
@@ -26,7 +26,7 @@
                     <input type="password" class="form-control {{ $errors->has('password') ? 'is-invalid' : '' }}"
                                 placeholder="{{ __('Password') }}"
                                 x-ref="password"
-                                wire:model.defer="password"
+                                wire:model="password"
                                 wire:keydown.enter="deleteUser" />
 
                     <x-maz-input-error for="password" class="mt-2" />

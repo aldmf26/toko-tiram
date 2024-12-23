@@ -61,7 +61,7 @@
                 
                 
                 <!-- Logout Other Devices Confirmation Modal -->
-                <x-jet-dialog-modal wire:model="confirmingLogout">
+                <x-jet-dialog-modal wire:model.live="confirmingLogout">
                     <x-slot name="title">
                         {{ __('Logout Other Browser Sessions') }}
                     </x-slot>
@@ -73,7 +73,7 @@
                             <input type="password" class="form-control {{ $errors->has('password') ? 'is-invalid' : '' }}"
                                         placeholder="{{ __('Password') }}"
                                         x-ref="password"
-                                        wire:model.defer="password"
+                                        wire:model="password"
                                         wire:keydown.enter="logoutOtherBrowserSessions" />
 
                             <x-maz-input-error for="password" class="mt-2" />

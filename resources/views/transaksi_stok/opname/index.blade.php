@@ -13,7 +13,7 @@
         <div class="section">
             @include('transaksi_stok.nav')
             <x-pemilik_nav route="transaksi.opname" />
-
+            <input type="hidden" name="pemilik" value="{{ request()->get('pemilik') }}"">
             <div class="mb-3 d-flex justify-content-between">
                 <input id="cari" style="width:30%" type="text" class="form-control" placeholder="cari nama produk"
                     autofocus>

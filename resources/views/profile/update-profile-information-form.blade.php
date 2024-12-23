@@ -9,11 +9,11 @@
             <x-maz-alert class="mr-3" on="saved" color='success'>
                 Saved
             </x-maz-alert>
-            <form wire:submit.prevent="updateProfileInformation">
+            <form wire:submit="updateProfileInformation">
 
                 @if (Laravel\Jetstream\Jetstream::managesProfilePhotos())
                 <div x-data="{photoName: null, photoPreview: null}" class="col-6 col-sm-4">
-                    <input type="file" class="d-none" wire:model="photo" x-ref="photo" x-on:change="
+                    <input type="file" class="d-none" wire:model.live="photo" x-ref="photo" x-on:change="
                                     photoName = $refs.photo.files[0].name;
                                     const reader = new FileReader();
                                     reader.onload = (e) => {
@@ -54,14 +54,14 @@
                 <!-- Name -->
                 <div class="form-group">
                     <label for="name">Name</label>
-                    <input id="name" type="text" class="form-control {{ $errors->has('name') ? 'is-invalid' : '' }}" wire:model.defer="state.name" autocomplete="name">
+                    <input id="name" type="text" class="form-control {{ $errors->has('name') ? 'is-invalid' : '' }}" wire:model="state.name" autocomplete="name">
                     <x-maz-input-error for="name" />
                 </div>
 
                 <!-- Email -->
                 <div class="col-span-6 sm:col-span-4">
                     <x-jet-label for="email" value="{{ __('Email') }}" />
-                    <input type="email" name="email " id="email" class="form-control {{ $errors->has('email') ? 'is-invalid' : '' }}" wire:model.defer="state.email">
+                    <input type="email" name="email " id="email" class="form-control {{ $errors->has('email') ? 'is-invalid' : '' }}" wire:model="state.email">
                     <x-maz-input-error for="email" />
                 </div>
 

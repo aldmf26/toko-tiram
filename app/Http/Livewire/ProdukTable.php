@@ -1,9 +1,9 @@
 <?php
 
 namespace App\Http\Livewire;
-
-use App\Models\Pemilik;
+ 
 use Livewire\Component;
+use App\Models\Pemilik;
 use Livewire\WithPagination; // Untuk paginasi
 use App\Models\Produk; // Import model Produk
 use App\Models\Rak;

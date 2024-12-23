@@ -35,7 +35,13 @@ class TransaksiStokController extends Controller
             $dijual_ke = $r->dijual_ke;
 
             $admin = auth()->user()->name;
-            $urutan = 1001 + TransaksiStok::where([['jenis_transaksi', 'penjualan'], ['dijual_ke', $dijual_ke]])->count();
+
+            $lastInvoice = TransaksiStok::where([['jenis_transaksi', 'penjualan'], ['dijual_ke', $dijual_ke]])
+            ->orderBy('urutan', 'desc')
+            ->first();
+
+            // Tentukan urutan berikutnya
+            $urutan = $lastInvoice ? $lastInvoice->urutan + 1 : 1001;
             $no_invoice = $dijual_ke . '-' . $urutan;
 
             for ($i = 0; $i < count($r->id_produk); $i++) {
@@ -268,9 +274,16 @@ class TransaksiStokController extends Controller
     {
         try {
             DB::beginTransaction();
-            $urutan = 1001 + TransaksiStok::where('jenis_transaksi', 'opname')->count(); // urutan opname otomatis
+
+            $lastInvoice = TransaksiStok::where('jenis_transaksi', 'opname')
+            ->orderBy('urutan', 'desc')
+            ->first();
+            // Tentukan urutan berikutnya
+            $urutan = $lastInvoice ? $lastInvoice->urutan + 1 : 1001;
             $no_invoice = 'O-' . $urutan;
+            
             $admin = auth()->user()->name;
+            $pemilik = $r->pemilik;
             for ($i = 0; $i < count($r->id_produk); $i++) {
                 $id_produk = $r->id_produk[$i];
                 $produk = Produk::find($id_produk);
@@ -285,6 +298,7 @@ class TransaksiStokController extends Controller
                         'produk_id' => $produk->id,
                         'jenis_transaksi' => 'opname',
                         'urutan' => $urutan,
+                        'dijual_ke' => $pemilik,
                         'no_invoice' => $no_invoice,
                         'jumlah' => $stok_fisik, // stok baru hasil opname
                         'stok_sebelum' => $stok_sistem,
