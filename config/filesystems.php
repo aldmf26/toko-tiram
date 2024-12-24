@@ -37,8 +37,8 @@ return [
 
         'public' => [
             'driver' => 'local',
-            'root' => '/home/username/public_html/tokoaga.ptagafood.com/uploads', // Path absolut ke folder 'uploads'
-            'url' => env('APP_URL') . '/uploads',
+            'root' => public_path('storage'),
+            'url' => env('APP_URL').'/storage',
             'visibility' => 'public',
         ],
 

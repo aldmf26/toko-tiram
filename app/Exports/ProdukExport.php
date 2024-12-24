@@ -23,7 +23,7 @@ class ProdukExport implements FromCollection, WithHeadings
     {
         return [
             'Kode Produk',
-            'Nama Produk',
+            'Nama Produk'
         ];
     }
 }
