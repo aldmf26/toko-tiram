@@ -39,7 +39,7 @@ class Produk extends Model
             $query->where(function ($q) use ($search) {
                 $q->where('nama_produk', 'like', '%' . $search . '%')
                     ->orWhere('kd_produk', 'like', '%' . $search . '%')
-                    ->orWhereHas('tags', function ($q) use ($search) {
+                    ->orWhereHas('tagss', function ($q) use ($search) {
                         $q->where('nama_tag', 'like', '%' . $search . '%');
                     });
             });
