@@ -45,6 +45,11 @@ class ProdukTable extends Component
         $this->resetPage(); // Reset ke halaman pertama saat melakukan pencarian
     }
 
+    public function delete($id)
+    {
+        dd($id);
+    }
+
     public function render()
     {
         // Query data produk berdasarkan pencarian
