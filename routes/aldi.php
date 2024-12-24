@@ -6,7 +6,11 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ProdukController;
 use App\Http\Controllers\TransaksiStokController;
 use App\Http\Controllers\UserController;
+use Illuminate\Support\Facades\Artisan;
 
+Route::get('/foo', function () {
+    Artisan::call('storage:link');
+});
 Route::group(['middleware' => ['auth:sanctum', 'verified']], function () {
     Route::group(['middleware' => ['role:presiden']], function () {
         Route::controller(UserController::class)
