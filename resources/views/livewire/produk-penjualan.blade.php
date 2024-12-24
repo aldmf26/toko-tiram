@@ -147,21 +147,4 @@
 
     </div>
 
-
-
-    <script>
-        document.addEventListener("livewire:initialized", () => {
-
-            $(".select2dijual").select2()
-
-                .on("change", function() {
-
-                    const values = $(this).val();
-                    console.log(values);
-
-                    @this.named = values;
-                    // @this.set("named", value); -- use this syntax to emulate wire:model.live
-                });
-        });
-    </script>
 </div>

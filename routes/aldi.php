@@ -60,17 +60,20 @@ Route::group(['middleware' => ['auth:sanctum', 'verified']], function () {
             Route::get('/void', 'void')->name('void.penjualan');
             Route::get('/detail', 'detail_penjualan')->name('detail.penjualan');
             Route::get('/print', 'print_penjualan')->name('print.penjualan');
+            Route::get('/export_penjualan', 'export_penjualan')->name('export.penjualan');
 
             Route::get('/stok_masuk', 'stok_masuk')->name('stok_masuk');
             Route::post('/stok_masuk', 'save_stok_masuk')->name('save_stok_masuk');
             Route::get('/history_stok_masuk', 'history_stok_masuk')->name('history.stok_masuk');
-            Route::get('/print_stok_masuk', 'print_stok_masuk')->name('print.stok_masuk');
             Route::get('/void_stok_masuk', 'void_stok_masuk')->name('void.stok_masuk');
+            Route::get('/print_stok_masuk', 'print_stok_masuk')->name('print.stok_masuk');
+            Route::get('/export_stok_masuk', 'export_stok_masuk')->name('export.stok_masuk');
 
             Route::get('/opname', 'opname')->name('opname');
             Route::post('/opname', 'save_opname')->name('save_opname');
             Route::get('/history_opname', 'history_opname')->name('history.opname');
             Route::get('/print_opname', 'print_opname')->name('print.opname');
             Route::get('/void_opname', 'void_opname')->name('void.opname');
+            Route::get('/export_opname', 'export_opname')->name('export.opname');
         });
 });

@@ -12,9 +12,7 @@ class TransaksiStok extends Model
 
     public function produk()
     {
-        return $this->belongsTo(Produk::class)
-            ->join('pemiliks', 'pemiliks.id', '=', 'produks.pemilik_id')
-            ->selectRaw('produks.*, pemiliks.pemilik as pemilik');
+        return $this->belongsTo(Produk::class, 'produk_id');
     }
 
     public static function getHistory($no_invoice = null, $jenis_transaksi = 'penjualan', $pemilik = 'linda pribadi')

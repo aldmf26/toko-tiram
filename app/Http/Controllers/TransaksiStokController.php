@@ -2,12 +2,14 @@
 
 namespace App\Http\Controllers;
 
+use App\Exports\PenjualanExport;
 use App\Models\Pemilik;
 use App\Models\Produk;
 use App\Models\Tag;
 use App\Models\TransaksiStok;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Maatwebsite\Excel\Facades\Excel;
 
 class TransaksiStokController extends Controller
 {
@@ -366,4 +368,10 @@ class TransaksiStokController extends Controller
             return redirect()->back()->with('error', $e->getMessage());
         }
     }
+
+    public function export_penjualan(Request $r)
+    {
+        return Excel::download(new PenjualanExport, 'Penjualan Export.xlsx');
+    }
+
 }
