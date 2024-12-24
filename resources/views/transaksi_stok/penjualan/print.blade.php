@@ -7,7 +7,7 @@
                     @php
                         $cekSama = $datas[0]->produk->pemilik == $datas[0]->dijual_ke;
                     @endphp
-                    <td class="text-end">{{ $datas[0]->produk->pemilik }}</td>
+                    <td class="text-end">{{ $datas[0]->produk->pemilik->pemilik }}</td>
                 </tr>
                 <tr>
                     <td scope="row" class="text-start">Dijual kepada</td>
