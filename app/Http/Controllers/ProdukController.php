@@ -86,7 +86,6 @@ class ProdukController extends Controller
 
     public function create(Request $r)
     {
-
         try {
             DB::beginTransaction();
 
