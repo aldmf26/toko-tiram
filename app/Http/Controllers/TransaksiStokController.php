@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Exports\OpnameExport;
 use App\Exports\PenjualanExport;
+use App\Exports\StokMasukExport;
 use App\Models\Pemilik;
 use App\Models\Produk;
 use App\Models\Tag;
@@ -179,7 +181,11 @@ class TransaksiStokController extends Controller
 
         try {
             DB::beginTransaction();
-            $urutan = 1001 + TransaksiStok::where('jenis_transaksi', 'stok_masuk')->count();
+            $lastInvoice = TransaksiStok::where('jenis_transaksi', 'stok_masuk')
+            ->orderBy('urutan', 'desc')
+            ->first();
+            // Tentukan urutan berikutnya
+            $urutan = $lastInvoice ? $lastInvoice->urutan + 1 : 1001;
             $no_invoice = 'M-' . $urutan;
             $admin = auth()->user()->name;
             for ($i = 0; $i < count($r->id_produk); $i++) {
@@ -369,9 +375,14 @@ class TransaksiStokController extends Controller
         }
     }
 
-    public function export_penjualan(Request $r)
+    public function export($jenis)
     {
-        return Excel::download(new PenjualanExport, 'Penjualan Export.xlsx');
+        $jenis_transaksi = [
+            'penjualan' => new PenjualanExport,
+            'stok_masuk' => new StokMasukExport,
+            'opname' => new OpnameExport,
+        ];
+        return Excel::download($jenis_transaksi[$jenis], "$jenis Export.xlsx");
     }
 
 }

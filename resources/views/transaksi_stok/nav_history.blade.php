@@ -15,7 +15,7 @@
 
     </ul>
     <div>
-        <a href="{{route("transaksi.export.$ujungRoute")}}" class="btn btn-md btn-success"><i class="fas fa-file-excel"></i> Export {{$ujungRoute == 'stok_masuk' ? 'Stok Masuk' : ucwords($ujungRoute)}}</a>
+        <a href="{{route("transaksi.export",$ujungRoute)}}" class="btn btn-md btn-success"><i class="fas fa-file-excel"></i> Export {{$ujungRoute == 'stok_masuk' ? 'Stok Masuk' : ucwords($ujungRoute)}}</a>
     </div>
 </div>
 <div class="col-lg-12">

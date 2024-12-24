@@ -8,7 +8,7 @@
             <tbody>
                 <tr>
                     <td scope="row" class="text-start">Pemilik</td>
-                    <td class="text-end">{{ $datas[0]->produk->pemilik }}</td>
+                    <td class="text-end">{{ $datas[0]->produk->pemilik->pemilik }}</td>
                 </tr>
                 <tr>
                     <td scope="row" class="text-start">Admin</td>
