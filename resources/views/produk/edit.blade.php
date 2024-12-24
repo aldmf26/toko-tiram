@@ -24,7 +24,7 @@
     <div class="col-2">
         <div class="mb-1">
             <label for="ind" class="form-label">Kode Produk</label>
-            <input type="text" class="form-control" name="nm_produk" value="{{ $produk->kd_produk }}" required>
+            <input type="text" class="form-control" name="kd_produk" value="{{ $produk->kd_produk }}" required>
         </div>
     </div>
     <div class="col-4">
