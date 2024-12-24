@@ -16,23 +16,6 @@ class ProdukPenjualan extends Component
     public $perPage = 6;
     public $selectedTag = 'linda pribadi';
     public $orderDetails = [];
-    
-
-    // coba
-    #[Validate('required')] 
-    public $title = '';
- 
-    #[Validate('required')] 
-    public $content = '';
- 
-    public function save()
-    {
-        $this->validate(); 
- 
-        
- 
-        return $this->redirect('/posts');
-    }
 
     public function mount()
     {

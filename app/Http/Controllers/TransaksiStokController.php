@@ -32,7 +32,6 @@ class TransaksiStokController extends Controller
     {
         try {
             DB::beginTransaction();
-
             $orderDetails = $r->orderDetails;
             $totalPrice = $r->totalPrice;
             $keterangan = $r->keterangan;

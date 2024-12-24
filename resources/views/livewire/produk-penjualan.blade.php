@@ -80,6 +80,10 @@
 
                 @if (!empty($orderDetails))
                     @foreach ($orderDetails as $order)
+                    <input type="hidden" name="id_produk[]" value="{{ $order['id'] }}">
+                    <input type="hidden" name="qty[]" value="{{ $order['quantity'] }}">
+                    <input type="hidden" name="price[]" value="{{ $order['price'] }}">
+                    
                         <div class="row mb-3">
                             <div class="col-lg-4">
                                 <img style="width: 90px; height: 90px"
@@ -113,9 +117,7 @@
                         <br>
                         <div wire:ignore x-data x-init="() => {
                             $('.select2dijual').select2();
-                            $('.select2dijual').on('change', function() {
-                                @this.set('named', $(this).val())
-                            })
+                            
                         }">
                             <select class="select2dijual" name="dijual_ke">
                                 <option value="">Dijual ke</option>
