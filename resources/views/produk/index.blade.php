@@ -2,10 +2,13 @@
     <x-slot name="header">
         <div class="d-flex justify-content-between">
             <h3>{{ $title }}</h3>
+            <div>
             @can('produk.create')
                 <button type="button" data-bs-toggle="modal" data-bs-target="#tambah" class="btn btn-primary"><i
                         class="fa fa-plus"></i> Tambah</button>
             @endcan
+            <a href="{{ route('produk.export') }}" class="btn btn-success"><i class="fa fa-file-excel"></i> Export</a>
+        </div>
         </div>
 
     </x-slot>

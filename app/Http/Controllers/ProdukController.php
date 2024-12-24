@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Exports\ProdukExport;
 use App\Models\Pemilik;
 use App\Models\Produk;
 use App\Models\Rak;
@@ -10,6 +11,7 @@ use App\Models\Tag;
 use App\Models\TransaksiStok;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Maatwebsite\Excel\Facades\Excel;
 
 class ProdukController extends Controller
 {
@@ -264,5 +266,10 @@ class ProdukController extends Controller
             'pemilik' => Pemilik::all(),
         ];
         return view('produk.edit', $data);
+    }
+
+    public function export()
+    {
+        return Excel::download(new ProdukExport, 'produk.xlsx');
     }
 }

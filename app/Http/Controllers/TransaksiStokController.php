@@ -382,6 +382,7 @@ class TransaksiStokController extends Controller
             'stok_masuk' => new StokMasukExport,
             'opname' => new OpnameExport,
         ];
+        
         return Excel::download($jenis_transaksi[$jenis], "$jenis Export.xlsx");
     }
 

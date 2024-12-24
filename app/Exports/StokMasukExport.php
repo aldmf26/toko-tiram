@@ -18,6 +18,7 @@ class StokMasukExport implements FromView,WithStyles
                         ->where('jenis_transaksi', 'stok_masuk')
                         ->orderBy('id', 'desc')
                         ->get();
+                        
         return view('exports.stok_masuk', [
             'invoices' => $this->datas
         ]);

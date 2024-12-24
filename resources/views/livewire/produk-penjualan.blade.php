@@ -1,4 +1,5 @@
 <div>
+
     <x-alert pesan="{{ session()->get('error') }}" />
     <div class="row mt-4">
         <div class="col-lg-8">
@@ -132,7 +133,8 @@
 
 
                     <input type="hidden" name="totalPrice" value="{{ $totalPrice }}">
-                    <button x-show="!isDisabled" @click="isDisabled = true" type="submit"
+                    <button x-show="!isDisabled" @click="isDisabled = true" wire:click="delete"
+                    wire:confirm="Are you sure you want to delete this post?" type="button"
                         class="mt-3 btn btn-primary btn-block"><i class="fa fa-save"></i> Pembayaran</button>
 
                     <button x-show="isDisabled" class="mt-3 btn btn-primary btn-block" type="button" disabled="">

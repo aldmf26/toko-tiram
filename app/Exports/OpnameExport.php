@@ -15,10 +15,10 @@ class OpnameExport implements FromView,WithStyles
     public function view(): View
     {
         $this->datas = TransaksiStok::with('produk.rak', 'produk.pemilik', 'produk.satuan')
-                        ->where('jenis_transaksi', 'penjualan')
+                        ->where('jenis_transaksi', 'opname')
                         ->orderBy('id', 'desc')
                         ->get();
-        return view('exports.penjualan', [
+        return view('exports.opname', [
             'invoices' => $this->datas
         ]);
     }
