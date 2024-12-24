@@ -35,6 +35,7 @@ Route::group(['middleware' => ['auth:sanctum', 'verified']], function () {
             ->group(function () {
                 Route::get('/', 'index')->name('index');
                 Route::post('/', 'create')->name('create');
+                Route::post('/update', 'update')->name('update');
                 Route::get('/daftar_rak', 'daftar_rak')->name('daftar_rak');
 
                 Route::get('/satuan', 'satuan')->name('satuan');

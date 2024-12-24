@@ -151,7 +151,7 @@
                 </x-modal>
             </form>
         @endcan
-        <form action="{{ route('produk.create') }}" method="post" enctype="multipart/form-data">
+        <form action="{{ route('produk.update') }}" method="post" enctype="multipart/form-data">
             @csrf
             <x-modal idModal="edit" size="modal-lg" title="Edit Produk" btnSave="Y">
 
@@ -182,6 +182,7 @@
     </div>
     @section('scripts')
         <script>
+            
             function tagsInput() {
                 return {
                     input: '',

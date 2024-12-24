@@ -55,7 +55,7 @@
                                                 @endif
                                             </div>
                                         </div>
-                                        <p class="mt-2 text-primary text-sm">{{ '#' . $d->tags }}</p>
+                                        <p class="mt-2 text-primary text-sm">{{ '#' . $d->tags->nama_tag }}</p>
                                         <p class="mt-2  text-sm">pemilik : {{ $d->pemilik->pemilik }}</p>
                                     </div>
                                 </div>

@@ -16,7 +16,7 @@
                 <tr>
                     <td class="text-center">{{ $loop->iteration }}</td>
                     <td>{{ $d->produk->nama_produk }}</td>
-                    <td>{{ $d->produk->pemilik }}</td>
+                    <td>{{ $d->produk->pemilik->pemilik }}</td>
                     <td>{{ $d->produk->rak->rak }}</td>
                     <td class="text-end">{{ number_format($d->stok_sebelum, 0) }}</td>
                     <td class="text-end">{{ number_format($d->stok_setelah, 0) }}</td>

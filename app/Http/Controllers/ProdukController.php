@@ -96,9 +96,13 @@ class ProdukController extends Controller
             if ($produkExist) {
                 return redirect()->back()->with('error', 'Produk sudah ada!');
             }
-
-            $urutan = 1001 + TransaksiStok::where('jenis_transaksi', 'stok_masuk')->count();
+            $lastInvoice = TransaksiStok::where('jenis_transaksi', 'stok_masuk')
+                ->orderBy('urutan', 'desc')
+                ->first();
+            // Tentukan urutan berikutnya
+            $urutan = $lastInvoice ? $lastInvoice->urutan + 1 : 1001;
             $no_invoice = 'M-' . $urutan;
+
             $admin = auth()->user()->name;
             $nm_produk = $r->nm_produk;
             $tags = $r->tags;
@@ -110,7 +114,6 @@ class ProdukController extends Controller
             $rak_id = $r->rak;
             $pemilik_id = $r->pemilik;
             $satuan_id = $r->satuan;
-
 
 
             if ($r->hasFile('image')) {
@@ -165,6 +168,67 @@ class ProdukController extends Controller
                 'tanggal' => now(),
                 'admin' => $admin
             ]);
+
+            DB::commit();
+            return redirect()->back()->withInput()->with('sukses', 'berhasil tambah data');
+        } catch (\Exception $e) {
+            DB::rollback();
+            return redirect()->back()->with('error', $e->getMessage());
+        }
+    }
+
+    public function update(Request $r)
+    {
+
+        try {
+            DB::beginTransaction();
+
+            $admin = auth()->user()->name;
+            $nm_produk = $r->nm_produk;
+            $tags = $r->tags;
+            $deskripsi = $r->deskripsi;
+            $hrg_beli = $r->hrg_beli;
+            $hrg_jual = $r->hrg_jual;
+            $kd_produk = $r->kd_produk;
+            $stok = $r->stok;
+            $rak_id = $r->rak_id;
+            $pemilik_id = $r->pemilik_id;
+            $satuan_id = $r->satuan_id;
+            $id_produk = $r->id_produk;
+
+            $produk = Produk::findOrFail($id_produk);
+
+            // Periksa apakah ada gambar baru diunggah
+            if ($r->hasFile('image')) {
+                // Hapus gambar lama jika ada
+                if ($produk->foto && file_exists(public_path('uploads/' . $produk->foto))) {
+                    unlink(public_path('uploads/' . $produk->foto));
+                }
+
+                // Simpan gambar baru
+                $imageName = time() . '.' . $r->image->extension();
+                $r->image->move(public_path('uploads'), $imageName);
+            } else {
+                // Pertahankan gambar lama
+                $imageName = $produk->foto;
+            }
+
+            $produk->update([
+                'nama_produk' => $nm_produk,
+                'deskripsi' => $deskripsi,
+                'harga' => $hrg_jual,
+                'foto' => $imageName,
+                'stok' => $stok,
+                'tags' => $tags,
+                'satuan_id' => $satuan_id,
+                'rak_id' => $rak_id,
+                'pemilik_id' => $pemilik_id,
+                'hrg_beli' => $hrg_beli,
+                'kd_produk' => $kd_produk,
+                'admin' => $admin
+            ]);
+
+         
 
             DB::commit();
             return redirect()->back()->withInput()->with('sukses', 'berhasil tambah data');
