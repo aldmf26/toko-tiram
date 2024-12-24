@@ -23,7 +23,7 @@ class Produk extends Model
         return $this->belongsTo(Satuan::class, 'satuan_id');
     }
 
-    public function tags()
+    public function tagss()
     {
         return $this->belongsToMany(Tag::class, 'produk_tags', 'id_produk', 'id_tag');
     }
