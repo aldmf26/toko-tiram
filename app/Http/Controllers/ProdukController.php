@@ -119,7 +119,8 @@ class ProdukController extends Controller
 
             if ($r->hasFile('image')) {
                 $imageName = time() . '.' . $r->image->extension();
-                $r->image->move(public_path('uploads'), $imageName);
+                // $r->image->move(public_path('uploads'), $imageName);
+                $r->image->storeAs('public/uploads', $imageName);
             } else {
                 $imageName = $r->image;
             }
