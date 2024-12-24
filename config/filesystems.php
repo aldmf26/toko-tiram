@@ -38,7 +38,7 @@ return [
         'public' => [
             'driver' => 'local',
             'root' => base_path('../public_html/tokoaga.ptagafood.com/uploads'),
-            'url' => env('APP_URL').'/storage',
+            'url' => env('APP_URL') . '/uploads',
             'visibility' => 'public',
         ],
 
