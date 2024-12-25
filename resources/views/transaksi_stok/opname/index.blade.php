@@ -56,7 +56,7 @@
                                         src="{{ strpos($d->foto, 'http') !== false ? $d->foto : asset('/uploads/' . $d->foto) }}">
                                 </div>
                             </td>
-                            <td>{{ $d->nama_produk }} | {{ $d->satuan->satuan ?? '' }}</td>
+                            <td>#{{ $d->kd_produk }} {{ $d->nama_produk }} | {{ $d->satuan->satuan ?? '' }}</td>
                             <td>{{ $d->pemilik->pemilik ?? '' }}</td>
                             <td>{{ $d->rak->rak ?? '' }}</td>
                             <td class="text-end {{ $d->stok < 1 ? 'text-danger' : '' }}">{{ $d->stok }}</td>

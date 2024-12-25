@@ -70,7 +70,7 @@
                                             class="selectGrade grade" :urutan="index + 1" id="">
                                             <option value="">Pilih Produk</option>
                                             @foreach ($produk as $g)
-                                                <option value="{{ $g->id }}">{{ ucwords($g->nama_produk) }}
+                                                <option value="{{ $g->id }}">#{{ $g->kd_produk }} {{ ucwords($g->nama_produk) }}
                                                     ({{ $g->stok }})
                                                 </option>
                                             @endforeach
