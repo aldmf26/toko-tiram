@@ -127,7 +127,7 @@ class TransaksiStokController extends Controller
     public function dataDetail($no_invoice, $title = 'Detail Penjualan')
     {
         $no_invoice = $no_invoice;
-        $datas = TransaksiStok::with('produk')->where('no_invoice', $no_invoice)->get();
+        $datas = TransaksiStok::with(['produk', 'produk.satuan'])->where('no_invoice', $no_invoice)->get();
         $totalPrice = $datas->sum(fn($item) => $item->produk->harga * $item->jumlah);
         $totalQty = $datas->sum(fn($item) => $item->jumlah);
 
@@ -295,11 +295,15 @@ class TransaksiStokController extends Controller
                 $produk = Produk::find($id_produk);
 
                 $stok_sistem = $produk->stok;
+                $stok_sebelum = $r->stok_sebelum[$i];
                 $stok_fisik = $r->stok_fisik[$i];
-                $selisih = $r->selisih[$i];
+                $selisih = $stok_sebelum - $stok_fisik;
                 $keterangan = $r->keterangan[$i] ?? '';
 
-                if ($selisih != 0) {
+                $cekSelisih[] = $selisih;
+                $cekSebelum[] = $stok_sebelum;
+                if ($selisih !== 0) {
+                    dd($selisih);
                     TransaksiStok::create([
                         'produk_id' => $produk->id,
                         'jenis_transaksi' => 'opname',
@@ -315,10 +319,10 @@ class TransaksiStokController extends Controller
                     ]);
 
                     $produk->update(['stok' => $stok_fisik]);
-                }
+                } 
             }
             DB::commit();
-            return redirect()->route('transaksi.opname')->with('sukses', 'Data Berhasil ditambahkan');
+            return redirect()->route('transaksi.opname', ['pemilik' => $pemilik])->with('sukses', 'Data Berhasil ditambahkan');
         } catch (\Exception $e) {
             DB::rollBack();
             return redirect()->back()->with('error', $e->getMessage());

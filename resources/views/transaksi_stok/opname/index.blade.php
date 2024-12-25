@@ -61,6 +61,7 @@
                             <td>{{ $d->rak->rak ?? '' }}</td>
                             <td class="text-end {{ $d->stok < 1 ? 'text-danger' : '' }}">{{ $d->stok }}</td>
                             <td>
+                                <input type="text" name="stok_sebelum[]" value="{{ $d->stok }}">
                                 <input required type="text" value="{{ $d->stok }}"
                                     class="form-control text-end" name="stok_fisik[]" x-model="stok_fisik"
                                     @keyup="selisih = stok_sistem - stok_fisik" onclick="this.select()">
