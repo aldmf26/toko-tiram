@@ -74,7 +74,7 @@
             }" action="{{ route('transaksi.save_pembayaran') }}" method="post">
                 @csrf
                 <h6>Order Details</h6>
-
+                
                 @if (!empty($orderDetails))
                     @foreach ($orderDetails as $order)
                     <input type="hidden" name="id_produk[]" value="{{ $order['id'] }}">
@@ -145,20 +145,15 @@
                 @else
                     <p>No items in cart.</p>
                 @endif
+                <div wire:loading wire:target="addToCart">
+                    <div class="spinner-border text-primary mt-1" role="status">
+                        <span class="visually-hidden">Loading...</span>
+                    </div>
+                </div>
             </form>
         </div>
 
     </div>
-    <div id="loading" class="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50 hidden">
-        <div class="animate-spin rounded-full h-16 w-16 border-t-4 border-blue-500"></div>
-    </div>
-    <script>
-        window.addEventListener('loading:start', () => {
-            document.getElementById('loading').classList.remove('hidden');
-        });
-        
-        window.addEventListener('loading:finish', () => {
-            document.getElementById('loading').classList.add('hidden');
-        });
-    </script>
+    
+  
 </div>
