@@ -39,28 +39,6 @@ class ProdukExport implements FromCollection, WithHeadings,WithStyles
     }
     public function styles(Worksheet $sheet)
     {
-        $totalRows = count($this->datas) + 1; // +1 for the header row
-
-        // Set header bold
-        $sheet->getStyle('A1:I1')->applyFromArray([
-            'font' => [
-                'bold' => true,
-            ],
-            'borders' => [
-                'allBorders' => [
-                    'borderStyle' => \PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THIN,
-                    'color' => ['argb' => '000000'],
-                ],
-            ],
-        ]);
-
-        // Border untuk semua data
-        $sheet->getStyle("A2:I$totalRows")->applyFromArray([
-            'borders' => [
-                'allBorders' => [
-                    'borderStyle' => \PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THIN,
-                ],
-            ],
-        ]);
+        styleExportBorder($this->datas, $sheet, 'I');
     }
 }

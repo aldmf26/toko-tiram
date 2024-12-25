@@ -40,7 +40,6 @@
 
     <!-- Scripts -->
     @include('layouts.partials.scripts')
-
 </body>
 
 </html>

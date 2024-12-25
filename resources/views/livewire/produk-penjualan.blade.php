@@ -34,14 +34,11 @@
                     <div class="col-lg-4">
                         <div class="card {{ $d->stok == 0 ? 'opacity-50' : '' }}" bis_skin_checked="1">
                             <div x-data="{ produkId: null, stokCukup: true }" class="card-content" bis_skin_checked="1">
-                                {{-- <img class="p-1 card-img-top img-fluid "
-                                    src="{{ strpos($d->foto, 'http') !== false ? $d->foto : asset('/uploads/' . $d->foto) }}"
-                                    alt="Card image cap" style="height: 10rem"> --}}
-                                <div class="p-2 pointer hovercard" wire:init
-                                    @click="$wire.addToCart({{ $d->id }})">
+                                
+                                <div class="p-2 pointer hovercard" @click="console.log('Clicked: {{ $d->id }}'); $wire.addToCart({{ $d->id }})">
                                     <div class="card-text">
                                         <div class="d-flex justify-content-between">
-                                            <h6 class="pointer">({{ $d->kd_produk }}) {{ ucwords($d->nama_produk) }}
+                                            <h6 class="pointer" >({{ $d->kd_produk }}) {{ ucwords($d->nama_produk) }}
                                             </h6>
                                             <span class=""><b>({{ number_format($d->stok, 0) }})</b></span>
                                         </div>
@@ -49,7 +46,7 @@
                                             <span>{{ number_format($d->harga, 0) }}</span>
                                             <div>
                                                 @if ($d->stok != 0)
-                                                    <span class="badge bg-primary pointer"><i
+                                                    <span  class="badge bg-primary pointer"><i
                                                             class="fas fa-plus"></i></span>
                                                 @else
                                                     <span class="badge bg-danger">Habis</span>
@@ -86,9 +83,12 @@
                     
                         <div class="row mb-3">
                             <div class="col-lg-4">
-                                <img style="width: 90px; height: 90px"
-                                    src="{{ strpos($order['image'], 'http') !== false ? $order['image'] : asset('/uploads/' . $order['image']) }}"
-                                    alt="">
+                                @if (file_exists(public_path('uploads/' . $order['image'])))
+                                
+                                    <img style="width: 90px; height: 90px"
+                                        src="{{ strpos($order['image'], 'http') !== false ? $order['image'] : asset('/uploads/' . $order['image']) }}"
+                                        alt="">
+                            @endif
                             </div>
                             <div class="col-lg-8">
                                 <b>{{ $order['name'] }}</b>

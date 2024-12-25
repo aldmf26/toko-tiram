@@ -6,7 +6,7 @@
 
 <script src="{{ asset('/js/bootstrap.bundle.min.js') }}"></script>
 
-@livewireScripts
+
 <script src="{{ asset('/js/main.js') }}"></script>
 <script src="{{ asset('/js/extensions/toastify.js') }}"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"
@@ -77,3 +77,5 @@
 @endif
 @yield('scripts')
 {{ $script ?? '' }}
+@livewireScripts
+

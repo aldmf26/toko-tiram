@@ -25,6 +25,35 @@ if (!function_exists('jenis_transaksi')) {
         return $jenis_transaksi;
     }
 }
+if (!function_exists('styleExportBorder')) {
+    
+    function styleExportBorder($datas,$sheet, $kolomTerakhir)
+    {
+        $totalRows = count($datas) + 1; // +1 for the header row
+
+        // Set header bold
+        $sheet->getStyle("A1:".$kolomTerakhir."1")->applyFromArray([
+            'font' => [
+                'bold' => true,
+            ],
+            'borders' => [
+                'allBorders' => [
+                    'borderStyle' => \PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THIN,
+                    'color' => ['argb' => '000000'],
+                ],
+            ],
+        ]);
+
+        // Border untuk semua data
+        $sheet->getStyle("A2:".$kolomTerakhir."$totalRows")->applyFromArray([
+            'borders' => [
+                'allBorders' => [
+                    'borderStyle' => \PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THIN,
+                ],
+            ],
+        ]);
+    }
+}
 if (!function_exists('tglFormat')) {
     function tglFormat($tgl)
     {

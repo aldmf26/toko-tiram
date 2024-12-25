@@ -46,7 +46,9 @@ class ProdukPenjualan extends Component
     public function addToCart($produkId)
     {
         // Cari produk berdasarkan ID
+        
         $produk = Produk::find($produkId);
+
         if ($produk->stok == 0) {
             session()->flash('error', "Produk : $produk->nama_produk stok habis.");
             return;
