@@ -5,7 +5,7 @@
                 <tr>
                     <td scope="row" class="text-start">Pemilik</td>
                     @php
-                        $cekSama = $datas[0]->produk->pemilik == $datas[0]->dijual_ke;
+                        $cekSama = strlower($datas[0]->produk->pemilik->pemilik) == strlower($datas[0]->dijual_ke);
                     @endphp
                     <td class="text-end">{{ $datas[0]->produk->pemilik->pemilik }}</td>
                 </tr>

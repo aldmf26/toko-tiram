@@ -303,7 +303,6 @@ class TransaksiStokController extends Controller
                 $cekSelisih[] = $selisih;
                 $cekSebelum[] = $stok_sebelum;
                 if ($selisih !== 0) {
-                    dd($selisih);
                     TransaksiStok::create([
                         'produk_id' => $produk->id,
                         'jenis_transaksi' => 'opname',

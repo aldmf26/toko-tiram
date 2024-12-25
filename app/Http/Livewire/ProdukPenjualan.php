@@ -45,6 +45,8 @@ class ProdukPenjualan extends Component
 
     public function addToCart($produkId)
     {
+        $this->dispatch('loading:start');
+
         // Cari produk berdasarkan ID
         
         $produk = Produk::find($produkId);
@@ -73,6 +75,8 @@ class ProdukPenjualan extends Component
                 'stok' => $produk->stok,
             ];
         }
+
+        $this->dispatch('loading:finish');
     }
 
     public function removeFromOrder($produkId)
