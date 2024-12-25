@@ -281,7 +281,6 @@ class TransaksiStokController extends Controller
     {
         try {
             DB::beginTransaction();
-
             $lastInvoice = TransaksiStok::where('jenis_transaksi', 'opname')
             ->orderBy('urutan', 'desc')
             ->first();
@@ -298,7 +297,7 @@ class TransaksiStokController extends Controller
                 $stok_sistem = $produk->stok;
                 $stok_fisik = $r->stok_fisik[$i];
                 $selisih = $r->selisih[$i];
-                $keterangan = $r->keterangan[$i];
+                $keterangan = $r->keterangan[$i] ?? '';
 
                 if ($selisih != 0) {
                     TransaksiStok::create([
