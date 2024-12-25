@@ -25,6 +25,7 @@
             <th>Nama Produk</th>
             <th class="text-end">Harga</th>
             <th class="text-end">Qty</th>
+            <th class="text-end">Satuan</th>
             <th class="text-end">Ttl Rp</th>
         </thead>
         <tbody>
@@ -34,6 +35,7 @@
                     <td>{{ $d->produk->nama_produk }}</td>
                     <td class="text-end">{{ number_format($d->produk->harga, 0) }}</td>
                     <td class="text-end">{{ number_format($d->jumlah, 0) }}</td>
+                    <td class="text-end">{{ $d->produk->satuan->satuan }}</td>
                     <td class="text-end">{{ number_format($d->produk->harga * $d->jumlah, 0) }}</td>
                 </tr>
             @endforeach
@@ -44,6 +46,7 @@
                 <th class="text-end">
                     <h5>{{ number_format($totalQty, 0) }}</h5>
                 </th>
+                <th></th>
                 <th class="text-end">
                     <h5>{{ number_format($totalPrice, 0) }}</h5>
                 </th>

@@ -32,11 +32,12 @@
                 <th>Kode</th>
                 <th>Nama</th>
                 <th>Rak</th>
-                <th>Deskripsi</th>
-                <th>Tags</th>
+                {{-- <th>Tags</th> --}}
                 <th>Pemilik</th>
+                <th>Deskripsi</th>
                 <th class="text-end">Harga Beli / Jual</th>
                 <th class="text-end">Stok</th>
+                <th class="text-end">Satuan</th>
                 <th class="text-center">Aksi</th>
             </tr>
         </thead>
@@ -54,13 +55,14 @@
                     <td>{{ $d->kd_produk }} </td>
                     <td>{{ $d->nama_produk }}</td>
                     <td>{{ $d->rak->rak }} </td>
-                    <td>{{ $d->deskripsi }}</td>
-                    <td class="text-primary">
+                    {{-- <td class="text-primary">
                         {{ $d->tags }}
-                    </td>
+                    </td> --}}
                     <td>{{ $d->pemilik->pemilik }}</td>
+                    <td>{{ $d->deskripsi }}</td>
                     <td align="right">{{ number_format($d->hrg_beli, 0) }} / {{ number_format($d->harga, 0) }}</td>
                     <td align="right">{{ $d->stok }}</td>
+                    <td align="right">{{ $d->satuan->satuan }}</td>
 
                     <td align="center">
                         @can('produk.update')

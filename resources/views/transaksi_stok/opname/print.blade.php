@@ -9,6 +9,7 @@
             <th width="130" class="text-end">Stok Program</th>
             <th width="100" class="text-end">Stok Fisik</th>
             <th width="100" class="text-end">Selisih</th>
+            <th width="100" class="text-end">Satuan</th>
             <th>Keterangan</th>
         </thead>
         <tbody>
@@ -21,6 +22,7 @@
                     <td class="text-end">{{ number_format($d->stok_sebelum, 0) }}</td>
                     <td class="text-end">{{ number_format($d->stok_setelah, 0) }}</td>
                     <td class="text-end">{{ number_format($d->stok_sebelum - $d->stok_setelah, 0) }}</td>
+                    <td class="text-end">{{ $d->produk->satuan->satuan }}</td>
                     <td>{{ $d->keterangan }}</td>
                 </tr>
             @endforeach
