@@ -74,7 +74,11 @@
             }" action="{{ route('transaksi.save_pembayaran') }}" method="post">
                 @csrf
                 <h6>Order Details</h6>
-                
+                <div wire:loading wire:target="addToCart">
+                    <div class="spinner-border text-primary mt-1" role="status">
+                        <span class="visually-hidden">Loading...</span>
+                    </div>
+                </div>
                 @if (!empty($orderDetails))
                     @foreach ($orderDetails as $order)
                     <input type="hidden" name="id_produk[]" value="{{ $order['id'] }}">
@@ -103,6 +107,7 @@
                                     <span>{{ number_format($order['price'] * $order['quantity'], 0) }}</span>
                                     <span wire:click="removeFromOrder({{ $order['id'] }})"
                                         class="text-danger pointer">X</span>
+                                    <span wire:loading wire:target="removeFromOrder({{ $order['id'] }})">...</span>
                                 </div>
                             </div>
                         </div>
@@ -145,11 +150,7 @@
                 @else
                     <p>No items in cart.</p>
                 @endif
-                <div wire:loading wire:target="addToCart">
-                    <div class="spinner-border text-primary mt-1" role="status">
-                        <span class="visually-hidden">Loading...</span>
-                    </div>
-                </div>
+                
             </form>
         </div>
 

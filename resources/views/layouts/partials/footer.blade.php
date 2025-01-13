@@ -9,7 +9,3 @@
         </div>
     </div>
 </footer>
-
-<script>
-    let table = new DataTable('#table');
-</script>

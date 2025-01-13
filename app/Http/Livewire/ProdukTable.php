@@ -7,6 +7,7 @@ use App\Models\Pemilik;
 use Livewire\WithPagination; // Untuk paginasi
 use App\Models\Produk; // Import model Produk
 use App\Models\Rak;
+use App\Models\TransaksiStok;
 
 class ProdukTable extends Component
 {
@@ -47,7 +48,10 @@ class ProdukTable extends Component
 
     public function delete($id)
     {
-        dd($id);
+        Produk::find($id)->delete();
+        TransaksiStok::where('produk_id', $id)->delete();
+
+        session()->flash('sukses', 'Produk sukses terhapus.');
     }
 
     public function render()

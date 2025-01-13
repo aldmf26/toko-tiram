@@ -17,7 +17,12 @@
 
 
 <script>
-    new DataTable('#example');
+    $("#example").dataTable({
+        columnDefs: [{
+            "defaultContent": "-",
+            "targets": "_all"
+        }]
+    });
 
     $('.select2').select2({
         dropdownParent: $('#tambah .modal-content')
@@ -36,7 +41,6 @@
         })
 
     }
-
 </script>
 
 @if (session()->has('sukses'))
@@ -78,4 +82,3 @@
 @yield('scripts')
 {{ $script ?? '' }}
 @livewireScripts
-

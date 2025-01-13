@@ -23,7 +23,13 @@
             </select>
         </div>
     </div>
-
+    <x-alert />
+    <div wire:loading wire:target="delete">
+        <button class="btn btn-secondary" type="button" disabled="">
+            <span class="spinner-grow spinner-grow-sm" role="status" aria-hidden="true"></span>
+            Processing...
+        </button>
+    </div>
     <table class="table table-hover table-bordered">
         <thead class="bg-light">
             <tr>
@@ -74,7 +80,7 @@
                             </button>
                         @endcan
                         @can('produk.delete')
-                            <button class="btn btn-sm btn-danger"><i class="fa fa-trash"></i></button>
+                            <button wire:confirm='jika dihapus maka terhapus juga data transaksi nya ?' wire:click="delete({{ $d->id }})" class="btn btn-sm btn-danger"><i class="fa fa-trash"></i></button>
                         @endcan
                     </td>
                 </tr>

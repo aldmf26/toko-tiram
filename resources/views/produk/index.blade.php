@@ -23,8 +23,8 @@
         </style>
 
         <x-alert pesan="{{ session()->get('error') }}" />
+        
         @livewire('produk-table')
-
 
         @can('produk.create')
             <form action="{{ route('produk.create') }}" method="post" enctype="multipart/form-data">
