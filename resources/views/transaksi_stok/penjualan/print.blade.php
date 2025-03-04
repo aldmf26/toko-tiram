@@ -37,14 +37,17 @@
         </thead>
         <tbody>
             @foreach ($datas as $d)
+            @php
+                $harga = $d->ttl_rp / $d->jumlah;
+            @endphp
                 <tr>
                     <td align="center">{{ $loop->iteration }}</td>
                     <td>{{ $d->produk->nama_produk }}</td>
-                    <td class="text-end">{{ number_format($d->produk->harga, 0) }}</td>
+                    <td class="text-end">{{ number_format($harga, 0) }}</td>
                     <td class="text-end">{{ number_format($d->jumlah, 0) }}</td>
                     <td class="text-end">{{ $d->produk->satuan->satuan }}</td>
                     @php
-                        $ttl = $cekSama ? 0 : $d->produk->harga * $d->jumlah;
+                        $ttl = $cekSama ? 0 : $harga * $d->jumlah;
                     @endphp
                     <td class="text-end">{{ number_format($ttl, 0) }}</td>
                 </tr>
