@@ -128,7 +128,7 @@ class TransaksiStokController extends Controller
     {
         $no_invoice = $no_invoice;
         $datas = TransaksiStok::with(['produk', 'produk.satuan'])->where('no_invoice', $no_invoice)->get();
-        $totalPrice = $datas->sum(fn($item) => $item->produk->harga * $item->jumlah);
+        $totalPrice = $datas->sum(fn($item) => $item->ttl_rp * $item->jumlah);
         $totalQty = $datas->sum(fn($item) => $item->jumlah);
 
         $data = [
