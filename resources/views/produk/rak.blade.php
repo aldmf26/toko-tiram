@@ -1,4 +1,4 @@
-<select name="rak" class="select2" id="selectRak">
+<select required name="rak" class="select2" id="selectRak">
     <option value="">- Pilih Rak -</option>
     <option value="tambah">Tambah Rak</option>
     @foreach ($rak as $r)
