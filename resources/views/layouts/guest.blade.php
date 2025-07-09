@@ -16,7 +16,7 @@
     <link rel="stylesheet" href="{{ asset('vendors/bootstrap-icons/bootstrap-icons.css') }}">
 
     <!-- Styles and Script -->
-    @vite(['resources/css/app.css', 'resources/sass/bootstrap.scss', 'resources/sass/themes/dark/app-dark.scss', 'resources/sass/app.scss', 'resources/sass/pages/auth.scss', 'resources/js/app.js'])
+    {{-- @vite(['resources/css/app.css', 'resources/sass/bootstrap.scss', 'resources/sass/themes/dark/app-dark.scss', 'resources/sass/app.scss', 'resources/sass/pages/auth.scss', 'resources/js/app.js']) --}}
 
 </head>
 
@@ -28,7 +28,8 @@
             </div>
             <div class="col-lg-7 d-none d-lg-block">
                 <div id="auth-right">
-                    <img class="w-full h-full" src="https://cdn.pixabay.com/photo/2020/10/01/17/11/store-5619201_1280.jpg" alt="">
+                    <img class="w-full h-full"
+                        src="https://cdn.pixabay.com/photo/2020/10/01/17/11/store-5619201_1280.jpg" alt="">
                 </div>
             </div>
         </div>
