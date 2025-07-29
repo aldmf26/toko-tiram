@@ -2,9 +2,9 @@
 
 namespace App\Http\Livewire;
 
+use App\Models\Produk;
 use App\Models\Saldo as ModelsSaldo;
 use App\Models\TransaksiStok;
-use App\Models\Produk;
 use Livewire\Component;
 use Illuminate\Support\Facades\Http;
 
@@ -32,7 +32,7 @@ class Saldo extends Component
     public function render()
     {
         $ttlRpPenjualan = TransaksiStok::where('jenis_transaksi', 'penjualan')->sum('ttl_rp');
-        $ttlHarga = DB::table('produks')->sum('harga');
+        $ttlHarga = Produk::sum('harga');
 
         $data = [
             'sisaSaldo' => $this->saldo - $ttlRpPenjualan + $ttlHarga
