@@ -29,8 +29,9 @@ class Saldo extends Component
     public function render()
     {
         $ttlRpPenjualan = TransaksiStok::where('jenis_transaksi', 'penjualan')->sum('ttl_rp');
+        $ttlHarga = Produk::sum('harga');
         $data = [
-            'sisaSaldo' => $this->saldo - $ttlRpPenjualan
+            'sisaSaldo' => $this->saldo - $ttlRpPenjualan + $ttlHarga
         ];
         return view('livewire.saldo', $data);
     }
