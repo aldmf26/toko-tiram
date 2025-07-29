@@ -83,7 +83,6 @@ class ProdukTable extends Component
             'pemiliks' => Pemilik::all(),
         ];
 
-        return view('livewire.produk-table', $data) // Sesuaikan layout
-            ->with('pagination', 'vendor.livewire.simple-bootstrap');;
+        return view('livewire.produk-table', $data);
     }
 }
