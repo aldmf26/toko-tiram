@@ -96,7 +96,7 @@
             </select>
         </div>
         <div>
-            {{ $produk->links() }} <!-- Paginasi -->
+            {{ $produk->links('vendor.livewire.simple-bootstrap') }} <!-- Paginasi -->
         </div>
     </div>
     {{-- @section('scripts')
