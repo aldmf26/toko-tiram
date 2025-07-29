@@ -4,6 +4,7 @@ namespace App\Http\Livewire;
 
 use App\Models\Saldo as ModelsSaldo;
 use App\Models\TransaksiStok;
+use App\Models\Produk;
 use Livewire\Component;
 
 class Saldo extends Component
