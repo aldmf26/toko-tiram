@@ -32,11 +32,16 @@ class Saldo extends Component
     }
     public function render()
     {
+        $ttlRpPenjualanOpname = TransaksiStok::where('jenis_transaksi', 'penjualan')
+            ->where('ttl_rp', '>', 0)
+            ->whereYear('tanggal', '>=', 2025)
+            ->whereMonth('tanggal', '>=', 8)
+            ->sum('ttl_rp');
         $ttlRpPenjualan = TransaksiStok::where('jenis_transaksi', 'penjualan')->sum('ttl_rp');
-        // $ttlRpPenjualan = TransaksiStok::where('jenis_transaksi', 'penjualan')->sum('ttl_rp');
         $ttlHarga = Produk::sum(DB::raw('harga * stok'));
+
         $data = [
-            'sisaSaldo' => $this->saldo - $ttlRpPenjualan + $ttlHarga
+            'sisaSaldo' => $this->saldo - $ttlRpPenjualan + $ttlHarga + $ttlRpPenjualanOpname
         ];
         return view('livewire.saldo', $data);
     }
