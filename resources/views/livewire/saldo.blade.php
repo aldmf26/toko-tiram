@@ -5,14 +5,16 @@
 
     </a>
 
-    <form wire:submit.prevent='update'>
-        <x-modal idModal="tambahSaldo" size="modal-lg" title="Tambah Produk">
-            <div class="form-group">
-                <label for="">Saldo Awal</label>
-                <input type="number" wire:model='saldo' class="form-control">
-            </div>
-        </x-modal>
-    </form>
+    @can('admin')
+        <form wire:submit.prevent='update'>
+            <x-modal idModal="tambahSaldo" size="modal-lg" title="Tambah Produk">
+                <div class="form-group">
+                    <label for="">Saldo Awal</label>
+                    <input type="number" wire:model='saldo' class="form-control">
+                </div>
+            </x-modal>
+        </form>
+    @endcan
 
     @section('scripts')
         <script>
