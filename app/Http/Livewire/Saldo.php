@@ -32,9 +32,9 @@ class Saldo extends Component
     }
     public function render()
     {
-        $ttlRpPenjualan = TransaksiStok::where('jenis_transaksi', 'penjualan')->sum('ttl_rp');
+        // $ttlRpPenjualan = TransaksiStok::where('jenis_transaksi', 'penjualan')->sum('ttl_rp');
+        $ttlRpPenjualan = 0;
         $ttlHarga = Produk::sum(DB::raw('harga * stok'));
-
         $data = [
             'sisaSaldo' => $this->saldo - $ttlRpPenjualan + $ttlHarga
         ];
