@@ -36,7 +36,7 @@ class Saldo extends Component
         $ttlHarga = Produk::sum(DB::raw('harga * stok'));
 
         $data = [
-            'sisaSaldo' => $this->saldo - $ttlRpPenjualan + $ttlHarga
+            'sisaSaldo' => ($this->saldo - $ttlRpPenjualan) + $ttlHarga
         ];
         return view('livewire.saldo', $data);
     }
