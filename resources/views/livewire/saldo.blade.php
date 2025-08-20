@@ -5,7 +5,7 @@
 
     </a>
 
-    @can('admin')
+    @role('presiden')
         <form wire:submit.prevent='update'>
             <x-modal idModal="tambahSaldo" size="modal-lg" title="Tambah Produk">
                 <div class="form-group">
@@ -14,7 +14,7 @@
                 </div>
             </x-modal>
         </form>
-    @endcan
+    @endrole
 
     @section('scripts')
         <script>
