@@ -14,7 +14,7 @@
                     <td scope="row" class="text-start">Admin</td>
                     <td class="text-end">{{ $datas[0]->admin }}</td>
                 </tr>
-              
+
             </tbody>
         </table>
     </x-slot>
@@ -30,16 +30,16 @@
         </thead>
         <tbody>
             @foreach ($datas as $d)
-            @php
-                $harga = $d->ttl_rp / $d->jumlah;
-            @endphp
+                @php
+                    $harga = $d->ttl_rp / $d->jumlah;
+                @endphp
                 <tr>
                     <td align="center">{{ $loop->iteration }}</td>
                     <td>{{ $d->produk->nama_produk }}</td>
-                    <td class="text-end">{{ number_format($harga, 0) }}</td>
+                    <td class="text-end">{{ number_format($d->produk->harga, 0) }}</td>
                     <td class="text-end">{{ number_format($d->jumlah, 0) }}</td>
                     <td class="text-end">{{ $d->produk->satuan->satuan }}</td>
-                    <td class="text-end">{{ number_format($harga * $d->jumlah, 0) }}</td>
+                    <td class="text-end">{{ number_format($d->produk->harga * $d->jumlah, 0) }}</td>
                 </tr>
             @endforeach
         </tbody>
