@@ -19,7 +19,7 @@
             <tr>
                 <td>{{ tglFormat($d->tanggal) }}</td>
                 <td>{{ $d->no_invoice }}</td>
-                <td>{{ $d->produk->kd_produk }}</td>
+                <td>{{ $d->produk->kd_produk ?? '' }}</td>
                 <td>{{ $d->produk->nama_produk }}</td>
                 <td>{{ $d->produk->pemilik->pemilik }}</td>
                 <td>{{ $d->produk->rak->rak }}</td>
@@ -36,4 +36,3 @@
         @endforelse
     </tbody>
 </table>
-
