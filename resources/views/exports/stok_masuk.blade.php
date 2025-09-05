@@ -26,7 +26,7 @@
                 <td>{{ $d->dijual_ke ?? '-' }}</td>
                 <td>{{ $d->keterangan ?? '-' }}</td>
                 <td>{{ $d->jumlah ?? '-' }}</td>
-                <td>{{ $d->ttl_rp ?? '-' }}</td>
+                <td>{{ $d->produk->harga * $d->jumlah ?? '-' }}</td>
                 <td>{{ $d->admin ?? '-' }}</td>
             </tr>
         @empty
