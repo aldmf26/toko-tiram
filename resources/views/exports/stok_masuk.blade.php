@@ -18,7 +18,6 @@
         @forelse ($invoices as $d)
             <tr>
                 <td>{{ $d->tanggal ?? '-' }}</td>
-                <td>{{ $d->tanggal ?? '-' }}</td>
                 <td>{{ $d->no_invoice ?? '-' }}</td>
                 <td>{{ $d->produk->kd_produk ?? '-' }}</td>
                 <td>{{ $d->produk->nama_produk ?? '-' }}</td>
