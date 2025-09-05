@@ -17,8 +17,7 @@
     <tbody>
         @forelse ($invoices as $d)
             <tr>
-                <td>{{ $d->tanggal ?? '[/INST]
-RESPONSE:
+                <td>{{ $d->tanggal ?? '-' }}</td>
                 <td>{{ $d->tanggal ?? '-' }}</td>
                 <td>{{ $d->no_invoice ?? '-' }}</td>
                 <td>{{ $d->produk->kd_produk ?? '-' }}</td>
