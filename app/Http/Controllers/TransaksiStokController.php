@@ -40,8 +40,8 @@ class TransaksiStokController extends Controller
             $admin = auth()->user()->name;
 
             $lastInvoice = TransaksiStok::where([['jenis_transaksi', 'penjualan'], ['dijual_ke', $dijual_ke]])
-            ->orderBy('urutan', 'desc')
-            ->first();
+                ->orderBy('urutan', 'desc')
+                ->first();
 
             // Tentukan urutan berikutnya
             $urutan = $lastInvoice ? $lastInvoice->urutan + 1 : 1001;
@@ -181,8 +181,8 @@ class TransaksiStokController extends Controller
         try {
             DB::beginTransaction();
             $lastInvoice = TransaksiStok::where('jenis_transaksi', 'stok_masuk')
-            ->orderBy('urutan', 'desc')
-            ->first();
+                ->orderBy('urutan', 'desc')
+                ->first();
             // Tentukan urutan berikutnya
             $urutan = $lastInvoice ? $lastInvoice->urutan + 1 : 1001;
             $no_invoice = 'M-' . $urutan;
@@ -282,12 +282,12 @@ class TransaksiStokController extends Controller
         try {
             DB::beginTransaction();
             $lastInvoice = TransaksiStok::where('jenis_transaksi', 'opname')
-            ->orderBy('urutan', 'desc')
-            ->first();
+                ->orderBy('urutan', 'desc')
+                ->first();
             // Tentukan urutan berikutnya
             $urutan = $lastInvoice ? $lastInvoice->urutan + 1 : 1001;
             $no_invoice = 'O-' . $urutan;
-            
+
             $admin = auth()->user()->name;
             $pemilik = $r->pemilik;
             for ($i = 0; $i < count($r->id_produk); $i++) {
@@ -318,7 +318,7 @@ class TransaksiStokController extends Controller
                     ]);
 
                     $produk->update(['stok' => $stok_fisik]);
-                } 
+                }
             }
             DB::commit();
             return redirect()->route('transaksi.opname', ['pemilik' => $pemilik])->with('sukses', 'Data Berhasil ditambahkan');
@@ -376,15 +376,16 @@ class TransaksiStokController extends Controller
         }
     }
 
-    public function export($jenis)
+    public function export($jenis, Request $r)
     {
+        $dari_tanggal = $r->dari_tanggal ?? date('Y-m-d');
+        $sampai_tanggal = $r->sampai_tanggal ?? date('Y-m-d');
         $jenis_transaksi = [
-            'penjualan' => new PenjualanExport,
-            'stok_masuk' => new StokMasukExport,
-            'opname' => new OpnameExport,
+            'penjualan' => new PenjualanExport($dari_tanggal, $sampai_tanggal),
+            'stok_masuk' => new StokMasukExport($dari_tanggal, $sampai_tanggal),
+            'opname' => new OpnameExport($dari_tanggal, $sampai_tanggal),
         ];
-        
+
         return Excel::download($jenis_transaksi[$jenis], "$jenis Export.xlsx");
     }
-
 }
