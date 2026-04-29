@@ -47,7 +47,7 @@
 
                             <a href="#" no_invoice="{{ $d->no_invoice }}"
                                 class="btn btn-sm btn-primary detail"><i class="fas fa-eye"></i></a>
-                            @if ($d->print_count >= 2)
+                            @if ($d->print_count >= 2 && !auth()->user()->hasRole('presiden'))
                                 <button type="button" class="btn btn-sm btn-secondary" disabled
                                     title="Sudah dicetak 2 kali">
                                     <i class="fas fa-print"></i>

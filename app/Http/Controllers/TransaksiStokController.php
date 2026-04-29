@@ -150,7 +150,8 @@ class TransaksiStokController extends Controller
     {
         $printCount = TransaksiStok::where('no_invoice', $r->no_invoice)->max('print_count') ?? 0;
 
-        if ($printCount >= 2) {
+        // Jika bukan presiden dan sudah print 2x, tolak
+        if (!auth()->user()->hasRole('presiden') && $printCount >= 2) {
             abort(403, 'Nota sudah dicetak dua kali.');
         }
 
