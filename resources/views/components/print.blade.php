@@ -1,4 +1,4 @@
-@props(['no_invoice', 'tanggal', 'title'])
+@props(['no_invoice', 'tanggal', 'title', 'printCount' => 0])
 
 
 <!doctype html>
@@ -10,10 +10,37 @@
     <title>{{$title}}</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
+    <style>
+        body {
+            position: relative;
+        }
+
+        .print-watermark {
+            position: absolute;
+            top: 45%;
+            left: 50%;
+            transform: translate(-50%, -50%) rotate(-30deg);
+            color: rgba(0, 0, 0, 0.08);
+            font-size: 8rem;
+            font-weight: 800;
+            letter-spacing: 0.5em;
+            white-space: nowrap;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .print-content {
+            position: relative;
+            z-index: 1;
+        }
+    </style>
 </head>
 
 <body>
-    <div class="container p-2">
+    @if(($printCount ?? 0) > 1)
+        <div class="print-watermark">{{ 'COPY ' . $printCount }}</div>
+    @endif
+    <div class="container p-2 print-content">
         <div class="row align-items-start mt-4 mb-2">
             <!-- Kolom Kiri - Logo dan Invoice -->
             <div class="col-md-6">

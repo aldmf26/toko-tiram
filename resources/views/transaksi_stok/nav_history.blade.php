@@ -15,7 +15,7 @@
     </ul>
     <div class="">
         {{-- <a href="{{route("transaksi.export",$ujungRoute)}}" class="btn btn-md btn-success"><i class="fas fa-file-excel"></i> Export {{$ujungRoute == 'stok_masuk' ? 'Stok Masuk' : ucwords($ujungRoute)}}</a> --}}
-        <a data-bs-toggle="modal" data-bs-target="#export" href="#" class="btn btn-md btn-success"><i
+    <a data-bs-toggle="modal" data-bs-target="#export" href="#" class="btn btn-md btn-success"><i
                 class="fas fa-file-excel"></i> Export
             {{ $ujungRoute == 'stok_masuk' ? 'Stok Masuk' : ucwords($ujungRoute) }}</a>
 

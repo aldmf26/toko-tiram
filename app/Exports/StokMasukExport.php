@@ -22,12 +22,12 @@ class StokMasukExport implements FromView, WithStyles
     }
     public function view(): View
     {
-        $this->datas = TransaksiStok::with('produk','produk.rak', 'produk.pemilik', 'produk.satuan')
+        $this->datas = TransaksiStok::with('produk', 'produk.rak', 'produk.pemilik', 'produk.satuan')
             ->where('jenis_transaksi', 'stok_masuk')
-             ->whereBetween('tanggal', [
-            $this->dari_tanggal . ' 00:00:00',
-            $this->sampai_tanggal . ' 23:59:59'
-        ])
+            ->whereBetween('tanggal', [
+                $this->dari_tanggal . ' 00:00:00',
+                $this->sampai_tanggal . ' 23:59:59'
+            ])
             ->orderBy('id', 'desc')
             ->get();
 

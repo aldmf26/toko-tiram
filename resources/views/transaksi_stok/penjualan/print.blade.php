@@ -1,4 +1,4 @@
-<x-print :title="$title" :no_invoice="$datas[0]->no_invoice" :tanggal="$datas[0]->tanggal">
+<x-print :title="$title" :no_invoice="$datas[0]->no_invoice" :tanggal="$datas[0]->tanggal" :printCount="$printCount">
     <x-slot name="table">
         <table class="table table-sm">
             <tbody>

@@ -25,9 +25,9 @@ class OpnameExport implements FromView,WithStyles
         $this->datas = TransaksiStok::with('produk.rak', 'produk.pemilik', 'produk.satuan')
                         ->where('jenis_transaksi', 'opname')
                          ->whereBetween('tanggal', [
-            $this->dari_tanggal . ' 00:00:00',
-            $this->sampai_tanggal . ' 23:59:59'
-        ])
+                            $this->dari_tanggal . ' 00:00:00',
+                            $this->sampai_tanggal . ' 23:59:59'
+                        ])
                         ->orderBy('id', 'desc')
                         ->get();
         return view('exports.opname', [

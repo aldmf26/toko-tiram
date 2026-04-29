@@ -148,7 +148,16 @@ class TransaksiStokController extends Controller
     }
     public function print_penjualan(Request $r)
     {
+        $printCount = TransaksiStok::where('no_invoice', $r->no_invoice)->max('print_count') ?? 0;
+
+        if ($printCount >= 2) {
+            abort(403, 'Nota sudah dicetak dua kali.');
+        }
+
+        TransaksiStok::where('no_invoice', $r->no_invoice)->increment('print_count');
+
         $data = $this->dataDetail($r->no_invoice);
+        $data['printCount'] = $printCount + 1;
 
         return view('transaksi_stok.penjualan.print', $data);
     }
@@ -373,6 +382,7 @@ class TransaksiStokController extends Controller
         } catch (\Exception $e) {
             DB::rollBack();
             return redirect()->back()->with('error', $e->getMessage());
+            
         }
     }
 

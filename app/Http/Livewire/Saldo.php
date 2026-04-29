@@ -32,11 +32,7 @@ class Saldo extends Component
     }
     public function render()
     {
-        $ttlRpPenjualanOpname = TransaksiStok::where('jenis_transaksi', 'penjualan')
-            ->where('ttl_rp', '>', 0)
-            ->whereYear('tanggal', '>=', 2025)
-            ->whereMonth('tanggal', '>=', 8)
-            ->sum('ttl_rp');
+        $ttlRpPenjualanOpname = 0;
             
         $ttlRpPenjualan = TransaksiStok::where('jenis_transaksi', 'penjualan')->sum('ttl_rp');
         $ttlHarga = Produk::sum(DB::raw('harga * stok'));
