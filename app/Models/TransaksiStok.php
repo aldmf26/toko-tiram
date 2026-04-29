@@ -20,12 +20,11 @@ class TransaksiStok extends Model
         $query = TransaksiStok::selectRaw('jenis_transaksi,no_invoice,tanggal as tgl,admin,dijual_ke,keterangan as ket, SUM(ttl_rp) as ttl_rp, SUM(jumlah) as qty, MAX(print_count) as print_count')
             ->groupBy('no_invoice')
             ->where([['jenis_transaksi', $jenis_transaksi], ['dijual_ke', $pemilik]]);
-        
+
         if ($no_invoice) {
             $query->where('no_invoice', $no_invoice);
         }
 
         return $query->orderBy('no_invoice', 'desc')->get();
     }
-
 }

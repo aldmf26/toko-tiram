@@ -12,5 +12,4 @@ class Satuan extends Model
     public $timestamps = false;
 
     protected $guarded = [];
-
 }

@@ -7,7 +7,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>{{$title}}</title>
+    <title>{{ $title }}</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
     <style>
@@ -37,7 +37,7 @@
 </head>
 
 <body>
-    @if(($printCount ?? 0) > 1)
+    @if (($printCount ?? 0) > 1)
         <div class="print-watermark">{{ 'COPY ' . $printCount }}</div>
     @endif
     <div class="container p-2 print-content">
@@ -48,7 +48,7 @@
                     <img style="height: 5.2rem" src="{{ globalVar('appUrl') }}" alt="">
                     <div>
                         <h6>
-                            {{$title}} : #{{ $no_invoice }}
+                            {{ $title }} : #{{ $no_invoice }}
                             <div class="text-muted">
                                 <p style="font-size: 13px">Tanggal : {{ tglFormat($tanggal) }}</p>
                             </div>
@@ -56,12 +56,12 @@
                     </div>
                 </div>
             </div>
-            
+
             <div class="col-md-6">
-                {{$table ?? ''}}
+                {{ $table ?? '' }}
             </div>
             <!-- Kolom Kanan - Tabel -->
-            
+
         </div>
         {{ $slot }}
 
@@ -86,4 +86,5 @@
         </div>
     </div>
 </body>
+
 </html>
